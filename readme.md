@@ -1,5 +1,7 @@
 ##	简介
 
+*	测试主页 [http://ustc-titanic.xyz](http://ustc-titanic.xyz)
+
 *	后端框架用的是 `Flask`, 前端框架用的是 `Vue.js`
 
 *	目前仅搭建了基本的 `demo`, 在 `index` 页面提交信息后, 随机返回 `Survived` 或者 `Fallen`
