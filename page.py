@@ -1,6 +1,6 @@
-from flask import make_response, request
+import hmac
+from flask import make_response, request, redirect
 from flask.views import MethodView
-# from flask.views import View
 from datetime import datetime, date
 
 base_path = './static/%s'
@@ -35,7 +35,51 @@ class PageHandler(MethodView):
 	def get_form(self):
 		form = {}
 		if request.is_json:
-			form = request.get_json()	# type-dict
+			# type-dict
+			form = request.get_json()
 		else:
 			form = request.form.to_dict()
 		return form
+
+	def login(self, user):
+		resp = make_response('succ')
+		resp.set_cookie(key='username', value=user.username, max_age=600)
+		uid_and_digest = make_secure_cookie(user.uid, user.username)
+		resp.set_cookie(key='uid', value=uid_and_digest, max_age=600)
+		return resp
+
+	def logout(self):
+		target = '/'
+		resp = redirect(target)
+		resp.set_cookie(key='username', value='')
+		resp.set_cookie(key='uid', value='')
+		return self.render(resp)
+
+	def is_valid_cookies(self):
+		try:
+			cookies = request.cookies
+			val = cookies.get('uid')
+			username = cookies.get('username')
+			return check_secure_cookies(val, username)
+		except Exception as e:
+			return False
+
+	def redirect_to_target(self, target='/'):
+		return self.render(redirect(target))
+
+# DK is the generated derived key
+# A derived key is a key, which may be calculated (derived) by a well-defined algorithm, usually referred to as a key derivation function, from an input consisting of public as well as secret data (e.g., a master key or primary key).
+hkey = 'dk_Huygens'.encode()
+def make_secure_cookie(uid, username):
+	msg = uid + username
+	digest = hmac.new( hkey, msg.encode() ).hexdigest()
+	uid_and_digest = '%s|%s' % (uid, digest)
+	return uid_and_digest
+
+def check_secure_cookies(uid_and_digest, username):
+	if uid_and_digest:
+		uid = uid_and_digest.split('|')[0]
+		us_uid_and_digest = make_secure_cookie(uid, username)
+		return uid_and_digest == us_uid_and_digest
+	else:
+		return False

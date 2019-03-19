@@ -1,0 +1,19 @@
+body > header{
+	height: 32px;
+}
+
+body > main{
+	margin-top: 64px;
+}
+
+div.form-row{
+	margin: 8px;
+}
+
+form{
+	width: 240px;
+}
+
+p#error{
+	color: red;
+}
