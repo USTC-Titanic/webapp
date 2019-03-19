@@ -18,17 +18,25 @@
 	Ubuntu 16.04
 	Python 3.5+
 	Flask 1.0.2
+	Vue.js v2.5.13
+	axios v0.17.1
+	Bootstrap v4.0.0
 	```
 
-*	首先下载整个工程，然后修改 `./server.py`, 注释掉第 `9` 行, 然后取消第 10 行的注释
+*	首先在 bash 中运行如下命令, 以便对用户数据库进行初始化
 
-*	在 bash 中运行如下命令
+	```bash
+	$ export FLASK_APP=server
+	$ python3 -m flask initdb
+	```
+
+	然后启动 server
 
 	```bash
 	python3 server.py
 	```
 
-*	打开浏览器, 输入 `127.0.0.1:8000` 即可在本地进行查看和调试
+*	打开浏览器, 输入 `127.0.0.1:8080` 即可在本地进行查看和调试
 
 	<br>
 
@@ -36,7 +44,9 @@
 
 *	20190124, 搭建了基本的 demo, 在 index 页面提交信息后, 随机返回 Survived 或者 Fallen
 
-*	20190219, 改进前端 UI, 改进前后端接口(使用json进行交互), 后端改进 IndexHandler, 使用 [let's encrypt]() 颁发的 HTTPS 证书并开启 HSTS, 增加机器学习模块
+*	20190219, 改进前端 UI, 改进前后端接口(使用json进行交互), 后端改进 IndexHandler, 使用 [let's encrypt](https://letsencrypt.org) 颁发的 HTTPS 证书并开启 HSTS, 增加机器学习模块
+
+*	20190319, 增加数据库模块, 增加注册、登录、登出模块。加盐密码, hmac cookie
 
 	<br>
 
@@ -46,15 +56,17 @@
 
 	*	对输入进行过滤, 比如 `年龄`, `兄弟姐妹数量` 等选项只能输入数字, 否则要求用户重新输入
 
-	*	完善 `index` 页面的表单信息, 使与 `Titanic` 输入特征一致
+	*	修改首页, 参考 [tensorfly](http://tensorfly.cn) 和 [training](http://training.ustc.edu.cn/), 完善界面
 
-	*	完善界面
-
-	*	增加注册、登录页面
+	*	完善 `Huygens` 页面的表单信息, 使与 `Titanic` 输入特征一致
 
 *	后端
 
-	*	增加注册、登录模块
+	*	增加预测模块
+
+*	其他
+
+	*	学习 tensorboard, 记录准确率变化曲线
 
 	<br>
 
