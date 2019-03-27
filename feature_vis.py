@@ -1,10 +1,9 @@
 from page import PageHandler
-
-class IndexHandler(PageHandler):
+class FeatureVisHandler(PageHandler):
 	def get(self):
-		filename = 'index/index.html'
+		filename = 'feature_vis/index.html'
 		return self.render_file(filename)
 
 	def post(self):
-		filename = 'index/index.html'
+		filename = 'feature_vis/index.html'
 		return self.render_file(filename)

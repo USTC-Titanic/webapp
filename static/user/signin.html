@@ -1,48 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>登录</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link type="text/css" rel="stylesheet" href="/static/bootstrap.min.css">
-	<link type="text/css" rel="stylesheet" href="/static/user/signin_signup.css">
+		<title>机器学习网站</title>
+		<link rel="stylesheet" href="/static/bootstrap.min.css">
+		<link rel="stylesheet" href="/static/user/signin_signup.css">
 </head>
-
 <body>
-<header class="container">
-</header>
+	<!-- 顶部导航 -->
+	<header class="navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<a class="navbar-brand" href="/">机器学习网站</a>
+			<section>
+				<ul class="nav navbar-nav" id="ul1">
+					<li>
+						<a href="/ml_tutorial">入门教程</a>
+					</li>
+					<li>
+						<a href="/ml_practice">实战教程</a>
+					</li>
+				</ul>
+			</section>
+			<section>
+				<ul class="nav navbar-nav" id="ul2">
+					<li class="active">
+						<a href="/signin">登录</a>
+					</li>
+					<li>
+						<a href="/signup">注册</a>
+					</li>
+				</ul>
+			</section>
+		</div>
+	</header>
 
-<main id="signin" class="row justify-content-center">
-	<div class="col-auto">
-		<form v-on:submit.prevent="do_signin">
-			<div class="form-row">
-				<div class="col">
-					<input type="text" class="form-control" v-model="username" placeholder="用户名" required="required"/>
-				</div>
-			</div>
+	<main class="container">
+		<div id="signin" class="row justify-content-center">
+			<div class="col-md-12">
+				<form v-on:submit.prevent="do_signin">
+					<h4 class="signin-header">登录</h4>
+					<div class="form-row" >
+						<div class="col">
+							<input type="text" class="form-control" v-model="username" placeholder="用户名" required>
+						</div>
+					</div>
 
-			<div class="form-row">
-				<div class="col">
-					<input type="password" class="form-control" v-model="password" placeholder="密码" required="required" />
-				</div>
-			</div>
+					<div class="form-row">
+						<div class="col">
+							<input type="password" class="form-control" v-model="password" placeholder="密码" required>
+						</div>
+					</div>
 
-			<div class="form-row">
-				<div class="col">
-					<button type="submit" class="btn btn-primary btn-block">登录</button>
-				</div>
+					<div class="form-row">
+						 <div class="col">
+						 	<button type="submit" class="btn btn-block">登录</button>
+						 </div>
+					</div>
+					<div class="form-row text-center">
+						<a href="/signup">没有账号？立即注册</a>
+					</div>
+					<div class="form-row justify-content-center" v-if="error_msg">
+						<p id="error">{{ error_msg }}</p>
+					</div>
+				</form>
 			</div>
-			
-			<div class="form-row justify-content-center">
-				<a href="/signup">没有账号？立即注册</a>
-			</div>
-
-			<div class="form-row justify-content-center" v-if="error_msg">
-				<p id="error">{{ error_msg }}</p>
-			</div>
-		</form>
-	</div>
-</main>
+		</div>
+	</main>
 </body>
 
 <script src="/static/vue.js"></script>

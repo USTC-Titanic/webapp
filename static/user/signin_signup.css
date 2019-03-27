@@ -1,10 +1,52 @@
-body > header{
-	height: 32px;
+body {
+	padding-top: 48px;
 }
 
-body > main{
-	margin-top: 64px;
+#ul1{
+	float: left;
 }
+
+#ul2{
+	float: right;
+}
+
+main{
+	margin-top: 64px;
+	text-align: center;
+}
+
+body{
+	background-color: #222;
+}
+
+#signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 100px auto;
+}
+
+#signup {
+    max-width: 330px;
+    padding: 15px;
+    margin: 100px auto;
+}
+
+.signin-header .signup-header{
+	color: white;
+	text-align: center;
+}
+
+.to_signup{
+	text-align: center;
+}
+
+/*body > header{*/
+/*	height: 32px;*/
+/*}*/
+
+/*body > main{*/
+/*	margin-top: 64px;*/
+/*}*/
 
 div.form-row{
 	margin: 8px;

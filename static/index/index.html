@@ -1,110 +1,137 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="zh-cn">
 <head>
-	<title>惠更斯号</title>
+	<title>机器学习</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/static/bootstrap.min.css">
-	<link rel="stylesheet" href="/static/fa.css">
-	<link type="text/css" rel="stylesheet" href="/static/index/index.css">
+	<link rel="stylesheet" href="/static/index/index.css">
 </head>
 
 <body>
-<div class="container" id="headers" style="height:120px;">
-	<header class="blog-header py-3 row justify-content-between">
-		<div class="col-auto text-left">
-			<div class="dropdown">
-				<i class="fas fa-bars fa-2x" data-toggle="dropdown" id="icon-user"></i>
-				<div class="dropdown-menu">
-					<a href="/signin" class="nav-link">Sign In</button>
-					<a href="/signup" class="nav-link">Sign Up</a>
-				</div>
-			</div>
-		</div><!-- col-auto -->
-
-		<div class="col">
-			<nav class="nav justify-content-center">
-				<a class="nav-link" href="/">惠更斯号</a>
-			</nav><!-- nav -->
+	<!-- 顶部导航header -->
+	<header class="navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<a class="navbar-brand" href="/">机器学习网站</a>
+			<section>
+				<ul class="nav navbar-nav" id="ul1">
+					<li>
+						<a href="/ml_tutorial">入门教程</a>
+					</li>
+					<li>
+						<a href="/ml_practice">实战教程</a>
+					</li>
+				</ul>
+			</section>
+			<section>
+				<ul class="nav navbar-nav" id="ul2">
+					<li class="active">
+						<a href="/signin">登录</a>
+					</li>
+					<li>
+						<a href="/signup">注册</a>
+					</li>
+				</ul>
+			</section>
 		</div>
-
-		<div class="col-auto text-right" >
-			<a href="/"><i class="fas fa-home fa-2x"></i></a>
-		</div><!-- col-auto -->
 	</header>
-</div>
 
-<main>
-	<div id="panel">
-		<div class="row justify-content-center" id="panel-header">
-			<div class="col">乘客信息</div>
-		</div>
-		
-		<div id="infosheet" class="row justify-content-center">
-			<div class="col-auto">
-				<form v-on:submit.prevent="do_submit_passenger_info">
-					<div class="form-row">
-						<div class="col">
-							<input class="form-control" placeholder="船舱等级" v-model="Pclass" required>
-						</div>
-					</div>
+	<!-- 中间的导航栏 -->
+	<nav class="container jumbotron jumbotron-fluid">
+	</nav>
 
-					<div class="form-row">
-						<div class="col">
-							<input class="form-control" placeholder="姓名" v-model="Name" required>
-						</div>
-					</div>
+	<!-- 主体内容 -->
+	<main class="container">
+		<hr class="featurette-divider">
+		<section class="row featurette">
+			<article class="col-md-7">
+				<h2>关于机器学习</h2>
+				<p class="lead">机器学习(Machine Learning, ML)是一门多领域交叉学科，涉及概率论、统计学、逼近论、凸分析、算法复杂度理论等多门学科。专门研究计算机怎样模拟或实现人类的学习行为，以获取新的知识或技能，重新组织已有的知识结构使之不断改善自身的性能。</p>
+			</article>
+			<aside class="col-md-5">
+				<img src="/static/assets/machine_learing.jpg">
+			</aside>
+		</section>
 
-					<div class="form-row">
-						<div class="col">
-							<input class="form-control" placeholder="性别" v-model="Sex" required>
-						</div>
-					</div>
+		<hr class="featurette-divider">
+		<section class="row featurette">
+			<aside class="col-md-4">
+				<img src="/static/assets/tensor.gif">
+			</aside>
+			<article class="col-md-8">
+				<h2 class="featurette-heading">关于TensorFlow</h2>
+				<p class="lead">TensorFlow™ 是一个采用数据流图（data flow graphs），用于数值计算的开源软件库。节点（Nodes）在图中表示数学操作，图中的线（edges）则表示在节点间相互联系的多维数据数组，即张量（tensor）。它灵活的架构让你可以在多种平台上展开计算，例如台式计算机中的一个或多个CPU（或GPU），服务器，移动设备等等。TensorFlow 最初由Google大脑小组（隶属于Google机器智能研究机构）的研究员和工程师们开发出来，用于机器学习和深度神经网络方面的研究，但这个系统的通用性使其也可广泛用于其他计算领域。它是人工智能的核心，是使计算机具有智能的根本途径，其应用遍及人工智能的各个领域，它主要使用归纳、综合而不是演绎。</p>
+			</article>
+		</section>
 
-					<div class="form-row">
-						<div class="col">
-							<input class="form-control" placeholder="年龄" v-model="Age" required>
-						</div>
-					</div>
+		<hr class="featurette-divider">
+		<section>
+			<h1>机器学习入门算法</h1>
+		</section>
 
-					<div class="form-row">
-						<div class="col">
-							<input class="form-control" placeholder="兄弟姐妹数量" v-model="SibSp" required>
-						</div>
-					</div>
+		<section class="row">
+			<article class="col-lg-4">
+				<h2>线性回归</h2>
+				<p>线性回归的定义是：目标值预期是输入变量的线性组合。线性模型形式简单、易于建模，但却蕴含着机器学习中一些重要的基本思想。线性回归，是利用数理统计中回归分析，来确定两种或两种以上变量间相互依赖的定量关系的一种统计分析方法，运用十分广泛。</p>
+				<a class="btn btn-default" href="#" role="button">详细教程 &raquo;</a>
+			</article>
 
-					<div class="form-row">
-						<div class="col">
-							<input class="form-control" placeholder="父母/孩子数量" v-model="Parch" required>
-						</div>
-					</div>
+			<article class="col-lg-4">
+				<h2>K近邻法</h2>
+				<p>k近邻是一种基本分类和回归方法，其工作机制非常简单：基于某种距离度量找出训练集中与其最靠近的k个训练样例，然后基于这k个邻居的信息进行预测或分类。通常在分类任务中使用投票法，在回归任务中使用平均法，也可根据距离远近进行加权平均或加权投票。</p>
+				<a class="btn btn-default" href="#" role="button">详细教程 &raquo;</a>
+			</article>
 
-					<div class="form-row">
-						<div class="col text-left">
-							<input id="result-style" class="form-control" placeholder="生存指数: " v-model="response" disabled>
-						</div>
-					</div>
+			<article class="col-lg-4">
+				<h2>朴素贝叶斯</h2>
+				<p>在机器学习中，朴素贝叶斯是一个分类模型，输出的预测值是离散值。在讲该模型之前首先有必要先了解贝叶斯定理，以该定理为基础的统计学派在统计学领域占据重要的地位，它是从观察者的角度出发，观察者所掌握的信息量左右了观察者对事件的认知。</p>
+				<a class="btn btn-default" href="#" role="button">详细教程 &raquo;</a>
+			</article>
+		</section>
 
-					<div class="form-row">
-						<div class="col">
-							<button class="btn btn-primary" id="confirm-btn">提交</button>
-						</div>
-					</div>
+		<section class="row">
+			<article class="col-lg-4">
+				<h2>决策树</h2>
+				<p>决策树是一个类似于流程图的树结构，其中每一个树节点表示一个属性上的测试，每一个分支代表一个属性的输出，每一个树叶节点代 表一个类或者类的分布，树的最顶层是树的根节点。</p>
+				<p><a class="btn btn-default" href="#" role="button">详细教程 &raquo;</a></p>
+			</article>
 
-				</form>
-			</div>
-		</div>
-	</div>
-</form>
+			<article class="col-lg-4">
+				<h2>支持向量机</h2>
+				<p>支持向量机（SVM）是90年代中期发展起来的基于统计学习理论的一种机器学习方法，通过寻求结构化风险最小来提高学习机泛化能力，实现经验风险和置信范围的最小化，从而达到在统计样本量较少的情况下，亦能获得良好统计规律的目的。</p>
+				<p><a class="btn btn-default" href="#" role="button">详细教程 &raquo;</a></p>
+			</article>
+			<article class="col-lg-4">  
+				<h2>人工神经网络</h2>
+				<p>人工神经网络的结构及其算法模拟自生物神经系统的组织和运转机能，具有悠久的历史。学术界对人工神经网络算法的研究几经浮沉。今年来，深度学习(Deep learning)算法的突破又将神经网络推向了一个新的高峰。当然，今天的“神经网络”已是一个庞大的学科领域，我们在机器学习中谈论神经网络时指的是“神经网络学习”</p>
+				<p><a class="btn btn-default" href="#" role="button">详细教程 &raquo;</a></p>
+			</article>
+		</section>
+
+		<hr class="featurette-divider">
+		<section>
+			<h1>机器学习实战教程</h1>
+		</section>
+
+		<section class="row featurette">
+			<aside class="col-md-5">
+				<img src="/static/assets/titanic.jpg">
+			</aside> 
+			<article class="col-md-7">
+				<h2 class="featurette-heading">泰坦尼克号生存预测</h2>
+				<p>1912年4月15日，泰坦尼克号在与冰山相撞后沉没，在2224名乘客和机组人员中造成1502人死亡。这场耸人听闻的悲剧震惊了国际社会，并为船舶制定了更好的安全规定。造成海难失事的原因之一是乘客和机组人员没有足够的救生艇。尽管幸存下沉有一些运气因素，但有些人比其他人更容易生存，例如妇女，儿童和上流社会。在这个挑战中，我们要求您完成对哪些人可能存活的分析。特别是，我们要求您运用机器学习工具来预测哪些乘客幸免于悲剧。</p>
+				<a class="btn btn-default" href="#" role="button">立即尝试 &raquo;</a>
+			</article>
+		</section>
+
+		<hr class="featurette-divider">
+		<p class="pull-right">
+			<a href="#top">回到顶部</a>
+		</p>
+	</main>
+	<!-- 底部版权信息 -->
+	<footer class="navbar-inverse">
+		<a href="">关于</a>
+	</footer>
 </body>
-</main>
-
-
-<script src="/static/jquery-3.2.1.slim.min.js"></script>
-<script src="/static/popper.min.js"></script>
-<script src="/static/bootstrap.min.js"></script>
-<script src="/static/vue.js"></script>
-<script src="/static/axios.js"></script>
-<script src="/static/index/index.js"></script>
 </html>

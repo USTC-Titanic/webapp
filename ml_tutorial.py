@@ -1,10 +1,9 @@
 from page import PageHandler
-
-class IndexHandler(PageHandler):
+class MLTutorial(PageHandler):
 	def get(self):
-		filename = 'index/index.html'
+		filename = 'ml_tutorial/ml_tutorial.html'
 		return self.render_file(filename)
 
 	def post(self):
-		filename = 'index/index.html'
+		filename = 'ml_tutorial/ml_tutorial.html'
 		return self.render_file(filename)

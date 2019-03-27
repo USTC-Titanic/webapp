@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>惠更斯号</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/static/predict/bootstrap.min_v4.0.0.css">
+	<link rel="stylesheet" href="/static/fa.css">
+	<link rel="stylesheet" href="/static/predict/index.css">
+</head>
+
+<body>
+<div class="container" id="headers" style="height:120px;">
+	<header class="blog-header py-3 row justify-content-between">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-4">
+			<div class="row justify-content-center">
+				<a class="nav-link" href="/">惠更斯号</a>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="row justify-content-end">
+				<div class="col-auto">
+					<a href="/signin" class="nav-link">登录</a>
+				</div>
+				<div class="col-auto">
+					<a href="/signup" class="nav-link">注册</a>
+				</div>
+			</div>
+		</div>
+	</header>
+</div>
+
+<main>
+	<div id="panel">
+		<div class="row justify-content-center" id="panel-header">
+			<div class="col">乘客信息</div>
+		</div>
+		
+		<div id="infosheet" class="row justify-content-center">
+			<div class="col-auto">
+				<form v-on:submit.prevent="do_submit_passenger_info">
+					<div class="form-row">
+						<div class="col">
+							<input class="form-control" placeholder="船舱等级" v-model="Pclass" required>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="col">
+							<input class="form-control" placeholder="姓名" v-model="Name" required>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="col">
+							<input class="form-control" placeholder="性别" v-model="Sex" required>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="col">
+							<input class="form-control" placeholder="年龄" v-model="Age" required>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="col">
+							<input class="form-control" placeholder="兄弟姐妹数量" v-model="SibSp" required>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="col">
+							<input class="form-control" placeholder="父母/孩子数量" v-model="Parch" required>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="col text-left">
+							<input id="result-style" class="form-control" placeholder="生存指数: " v-model="response" disabled>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="col">
+							<button class="btn btn-primary" id="confirm-btn">提交</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+</form>
+</body>
+</main>
+
+<script src="/static/vue.js"></script>
+<script src="/static/axios.js"></script>
+<script src="/static/predict/index.js"></script>
+</html>

@@ -1,0 +1,117 @@
+#icon-user{
+  color: #007bff;
+  cursor:pointer;
+}
+
+.dropdown-menu {
+  border-radius: 0.5rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+.jumbotron {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 160px;
+    padding-bottom: 120px;
+    background-image: url('/static/index/mc.jpg');
+    background-repeat: no-repeat;
+    background-position: center top;
+    /*background-position: 85% top;*/
+}
+
+
+main {
+}
+
+#news-source {
+    margin-bottom: 60px;
+}
+
+.card {
+  border: none;
+}
+
+.card-header{
+  background-color: transparent;
+  padding-bottom: 24px;
+  border: none;
+}
+
+.card-header:hover{
+  background-color: #e9ecef45;
+}
+
+
+.blog-post-title {
+  /*margin-bottom: .25rem;*/
+  font-size: 1.5rem;
+  display: inline;
+}
+
+.blog-post-date {
+  margin-bottom: 1.25rem;
+  color: #999;
+}
+
+
+/*
+ * Footer
+ */
+.blog-footer {
+  padding: 2rem 0;
+  color: #999;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-top: .05rem solid #e5e5e5;
+}
+
+.blog-footer p:last-child {
+  margin-bottom: 0;
+}
+
+
+.blog-pagination {
+  padding: 20px; 
+}
+
+
+#go-to-top {
+  display: block;
+  position: fixed;
+  padding: 16px;
+  bottom: 160px;
+  right: 24px;
+  cursor: pointer;
+  color: rgba(0,123,255,.5);
+}
+
+a{
+  cursor:pointer;
+  text-decoration: none !important;
+}
+
+.form-row{
+	padding:4px;
+}
+
+#panel{
+	width:256px;
+	text-align:center;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#panel-header{
+	padding:8px;
+}
+
+#confirm-btn{
+	width: 100%;
+}
+
+#result-style{
+	color:red;
+}

@@ -1,0 +1,24 @@
+header{
+	text-align: center;
+	padding: 32px;
+}
+
+main{
+	margin: 64px;
+	/*text-align: center;*/
+	/*width: 800px;*/
+	/*height: 400px;*/
+}
+
+article{
+	/*width: 50%;*/
+	/*height: 100%;*/
+	height: 400px;
+	padding: 64px;
+}
+
+/*aside{
+	width: 50%;
+	height: 100%;
+	float: right;
+}*/
