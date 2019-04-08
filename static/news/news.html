@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>新闻资讯</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/static/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/mynavbar.css">
+	<link rel="stylesheet" href="/static/news/news.css">
+</head>
+
+<body>
+	<header class="navbar navbar-expand-md navbar-dark fixed-top">
+		<div class="container">
+			<section id="mybrand">
+				<a class="navbar-brand" href="/">机器学习</a>
+			</section>
+			<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<section class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+				<ul class="navbar-nav">
+					<li class="nav-item mr-4">
+						<a class="nav-link" href="/tutorial">入门教程</a>
+					</li>
+					<li class="nav-item mr-4">
+						<a class="nav-link" href="/practice">实战教程</a>
+					</li>
+					<li class="nav-item mr-4">
+						<a class="nav-link" href="/news">新闻资讯</a>
+					</li>
+				</ul>
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="/signin">登录</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/signup">注册</a>
+					</li>
+				</ul>
+			</section>
+	</header>
+
+	<main class="container" id="newspage">
+		<aside>
+			<section id="sidebar">
+				<div id="sidebar-title">新闻源</div>
+				<div>
+					<ul id="sidebar-menu">
+						<li v-on:click="article_number = 1">机器之心</li>
+						<li v-on:click="article_number = 2">36kr</li>
+						<li v-on:click="article_number = 3">虎嗅</li>
+						<li v-on:click="article_number = 4"></li>
+						<li v-on:click="article_number = 5"></li>
+					</ul>
+				</div>
+			</section>
+		</aside>
+		<article class="row">
+			<div class="col-6 newsitem" v-for="(news, key) in newslist" v-bind:key="key">
+				<section class="newscard" v-bind:data-target="'#content-' + key" data-toggle="modal">
+					<div class="newsheader">{{ news.header }}</div>
+					<div class="newsdigest">{{ news.content.substring(0, 32) }} ...</div>
+				</section>
+				<section class="modal fade" v-bind:id="'content-' + key" tabindex="-1">
+					<div class="modal-dialog modal-content">
+						<!-- <div class=""> -->
+							<div class="modal-header">
+								<h5 class="modal-title">{{ news.header }}</h5>
+							</div>
+
+							<div class="modal-body">{{ news.content }}</div>
+
+							<div class="modal-footer justify-content-between">
+								<div><time>30</time>min ago</div>
+								<div>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						<!-- </div> -->
+					</div>
+				</section>
+			</div>
+		</article>
+	</main>
+
+</body>
+<script src="/static/jquery-3.2.1.slim.min.js"></script>
+<script src="/static/bootstrap.min.js"></script>
+<script src="/static/vue.js"></script>
+<script src="/static/news/news.js"></script>
+</html>

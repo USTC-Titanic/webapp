@@ -1,56 +1,188 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html>
 <head>
 	<title>入门教程</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/static/bootstrap.min.css">
-	<link rel="stylesheet" href="/static/ml_tutorial/ml_tutorial.css">
+	<link rel="stylesheet" href="/static/mynavbar.css">
 </head>
 
 <body>
-	<!-- 顶部导航 -->
-	<header class="navbar-inverse navbar-fixed-top">
+	<header class="navbar navbar-expand-md navbar-dark fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="/">机器学习网站</a>
-			<section>
-				<ul class="nav navbar-nav" id="ul1">
-					<li>
-						<a href="/ml_tutorial">入门教程</a>
+			<section id="mybrand">
+				<a class="navbar-brand" href="/">机器学习</a>
+			</section>
+			<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<section class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+				<ul class="navbar-nav">
+					<li class="nav-item mr-4">
+						<a class="nav-link" href="/tutorial">入门教程</a>
 					</li>
-					<li>
-						<a href="/ml_practice">实战教程</a>
+					<li class="nav-item mr-4">
+						<a class="nav-link" href="/practice">实战教程</a>
+					</li>
+					<li class="nav-item mr-4">
+						<a class="nav-link" href="/news">新闻资讯</a>
+					</li>
+				</ul>
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="/signin">登录</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/signup">注册</a>
 					</li>
 				</ul>
 			</section>
-			<section>
-				<ul class="nav navbar-nav" id="ul2">
-					<li class="active">
-						<a href="/signin">登录</a>
-					</li>
-					<li>
-						<a href="/signup">注册</a>
-					</li>
-				</ul>
-			</section>
-		</div>
 	</header>
 
-	<main class="container">
-		<aside id="sidebar">
-			<h2 id="sidebar-title">机器学习入门算法</h2>
-			<ul id="sidebar-menu">
-				<li><a href="#">线性回归</a></li>
-				<li><a href="#">逻辑回归</a></li>
-				<li><a href="#">K邻近法</a></li>
-				<li><a href="#">支持向量机</a></li>
-				<li><a href="#">朴素贝叶斯</a></li>
-				<li><a href="#">人工神经网络</a></li>
-			</ul>
+	<main class="container" id="tutorial">
+		<aside>
+			<section id="sidebar">
+				<div id="sidebar-title">机器学习入门算法</div>
+				<div>
+					<ul id="sidebar-menu">
+						<li v-on:click="article_number = 1">线性回归</li>
+						<li v-on:click="article_number = 2">逻辑回归</li>
+						<li v-on:click="article_number = 3">K邻近</li>
+						<li v-on:click="article_number = 4">支持向量机</li>
+						<li v-on:click="article_number = 5">朴素贝叶斯</li>
+						<li v-on:click="article_number = 6">人工神经网络</li>
+					</ul>
+				</div>
+			</section>
 		</aside>
-		<article>
-			<h1></h1>
+		<article class="row">
+			<section v-show="article_number === 1" id="article1">
+				<h3 id="title1">线性回归</h3>
+				<div id="content1">
+					<p>
+						在统计学中，线性回归（Linear regression）是利用称为线性回归方程的最小二乘函数对一个或多个自变量和因变量之间关系进行建模的一种回归分析。这种函数是一个或多个称为回归系数的模型参数的线性组合。只有一个自变量的情况称为简单回归，大于一个自变量情况的叫做多元回归。
+					</p>
+					<p>
+						在线性回归中，数据使用线性预测函数来建模，并且未知的模型参数也是通过数据来估计。这些模型被叫做线性模型。最常用的线性回归建模是给定X值的y的条件均值是X的仿射函数。不太一般的情况，线性回归模型可以是一个中位数或一些其他的给定X的条件下y的条件分布的分位数作为X的线性函数表示。像所有形式的回归分析一样，线性回归也把焦点放在给定X值的y的条件概率分布，而不是X和y的联合概率分布（多元分析领域）。
+					</p>
+
+					<p>
+						线性回归是回归分析中第一种经过严格研究并在实际应用中广泛使用的类型。这是因为线性依赖于其未知参数的模型比非线性依赖于其未知参数的模型更容易拟合，而且产生的估计的统计特性也更容易确定。
+					</p>
+
+					<p>
+						线性回归有很多实际用途。分为以下两大类：
+					</p>
+
+					<p>
+						如果目标是预测或者映射，线性回归可以用来对观测数据集的和X的值拟合出一个预测模型。当完成这样一个模型以后，对于一个新增的X值，在没有给定与它相配对的y的情况下，可以用这个拟合过的模型预测出一个y值。
+					</p>
+
+					<p>
+						给定一个变量y和一些变量 {\displaystyle X_{1}} X_1,..., {\displaystyle X_{p}} X_p，这些变量有可能与y相关，线性回归分析可以用来量化y与Xj之间相关性的强度，评估出与y不相关的 {\displaystyle X_{j}} X_j，并识别出哪些 {\displaystyle X_{j}} X_j的子集包含了关于y的冗余信息。
+					</p>
+
+					<p>
+						线性回归模型经常用最小二乘逼近来拟合，但他们也可能用别的方法来拟合，比如用最小化“拟合缺陷”在一些其他规范里（比如最小绝对误差回归），或者在桥回归中最小化最小二乘损失函数的惩罚。相反，最小二乘逼近可以用来拟合那些非线性的模型。因此，尽管“最小二乘法”和“线性模型”是紧密相连的，但他们是不能划等号的。
+					</p>
+
+					<p>
+						给定一个变量y和一些变量 {\displaystyle X_{1}} X_1,..., {\displaystyle X_{p}} X_p，这些变量有可能与y相关，线性回归分析可以用来量化y与Xj之间相关性的强度，评估出与y不相关的 {\displaystyle X_{j}} X_j，并识别出哪些 {\displaystyle X_{j}} X_j的子集包含了关于y的冗余信息。
+					</p>
+
+					<p>
+						线性回归模型经常用最小二乘逼近来拟合，但他们也可能用别的方法来拟合，比如用最小化“拟合缺陷”在一些其他规范里（比如最小绝对误差回归），或者在桥回归中最小化最小二乘损失函数的惩罚。相反，最小二乘逼近可以用来拟合那些非线性的模型。因此，尽管“最小二乘法”和“线性模型”是紧密相连的，但他们是不能划等号的。
+					</p>
+
+					<p>
+						给定一个变量y和一些变量 {\displaystyle X_{1}} X_1,..., {\displaystyle X_{p}} X_p，这些变量有可能与y相关，线性回归分析可以用来量化y与Xj之间相关性的强度，评估出与y不相关的 {\displaystyle X_{j}} X_j，并识别出哪些 {\displaystyle X_{j}} X_j的子集包含了关于y的冗余信息。
+					</p>
+
+					<p>
+						线性回归模型经常用最小二乘逼近来拟合，但他们也可能用别的方法来拟合，比如用最小化“拟合缺陷”在一些其他规范里（比如最小绝对误差回归），或者在桥回归中最小化最小二乘损失函数的惩罚。相反，最小二乘逼近可以用来拟合那些非线性的模型。因此，尽管“最小二乘法”和“线性模型”是紧密相连的，但他们是不能划等号的。
+					</p>
+				</div>
+			</section>
+
+			<section v-show="article_number === 2" id="article2">
+				<h3 id="title2">逻辑回归</h3>
+				<div id="content2">
+					<p>
+						对数几率回归（也称“逻辑回归”）（英语：Logistic regression 或logit regression），即对数几率模型（英语：Logit model，也译作“逻辑模型”、“评定模型”、“分类评定模型”）是离散选择法模型之一，属于多重变量分析范畴，是社会学、生物统计学、临床、数量心理学、计量经济学、市场营销等统计实证分析的常用方法。
+					</p>
+					<p>
+						logistic回归又称logistic回归分析，是一种广义的线性回归分析模型，常用于数据挖掘，疾病自动诊断，经济预测等领域。例如，探讨引发疾病的危险因素，并根据危险因素预测疾病发生的概率等。以胃癌病情分析为例，选择两组人群，一组是胃癌组，一组是非胃癌组，两组人群必定具有不同的体征与生活方式等。因此因变量就为是否胃癌，值为“是”或“否”，自变量就可以包括很多了，如年龄、性别、饮食习惯、幽门螺杆菌感染等。自变量既可以是连续的，也可以是分类的。然后通过logistic回归分析，可以得到自变量的权重，从而可以大致了解到底哪些因素是胃癌的危险因素。同时根据该权值可以根据危险因素预测一个人患癌症的可能性。
+					</p>
+					<p>
+						logistic回归是一种广义线性回归（generalized linear model），因此与多重线性回归分析有很多相同之处。它们的模型形式基本上相同，都具有 w‘x+b，其中w和b是待求参数，其区别在于他们的因变量不同，多重线性回归直接将w‘x+b作为因变量，即y =w‘x+b，而logistic回归则通过函数L将w‘x+b对应一个隐状态p，p =L(w‘x+b),然后根据p 与1-p的大小决定因变量的值。如果L是logistic函数，就是logistic回归，如果L是多项式函数就是多项式回归。
+					</p>
+					<p>
+						logistic回归的因变量可以是二分类的，也可以是多分类的，但是二分类的更为常用，也更加容易解释，多类可以使用softmax方法进行处理。实际中最为常用的就是二分类的logistic回归。
+					</p>
+					<p>
+						Logistic回归模型的适用条件
+					</p>
+					<ol>
+						<li>
+							因变量为二分类的分类变量或某事件的发生率，并且是数值型变量。但是需要注意，重复计数现象指标不适用于Logistic回归。
+						</li>
+						<li>
+							2 残差和因变量都要服从二项分布。二项分布对应的是分类变量，所以不是正态分布，进而不是用最小二乘法，而是最大似然法来解决方程估计和检验问题。
+						</li>
+						<li>
+							3 自变量和Logistic概率是线性关系
+						</li>
+						<li>
+							4 各观测对象间相互独立。
+						</li>
+					</ol>
+					<p>
+						原理：如果直接将线性回归的模型扣到Logistic回归中，会造成方程二边取值区间不同和普遍的非直线关系。因为Logistic中因变量为二分类变量，某个概率作为方程的因变量估计值取值范围为0-1，但是，方程右边取值范围是无穷大或者无穷小。所以，才引入Logistic回归。
+					</p>
+					<p>
+						Logistic回归实质：发生概率除以没有发生概率再取对数。就是这个不太繁琐的变换改变了取值区间的矛盾和因变量自变量间的曲线关系。究其原因，是发生和未发生的概率成为了比值 ，这个比值就是一个缓冲，将取值范围扩大，再进行对数变换，整个因变量改变。不仅如此，这种变换往往使得因变量和自变量之间呈线性关系，这是根据大量实践而总结。所以，Logistic回归从根本上解决因变量要不是连续变量怎么办的问题。还有，Logistic应用广泛的原因是许多现实问题跟它的模型吻合。例如一件事情是否发生跟其他数值型自变量的关系。
+					</p>
+					<p>
+						注意：如果自变量为字符型，就需要进行重新编码。一般如果自变量有三个水平就非常难对付，所以，如果自变量有更多水平就太复杂。这里只讨论自变量只有三个水平。非常麻烦，需要再设二个新变量。共有三个变量，第一个变量编码1为高水平，其他水平为0。第二个变量编码1为中间水平，0为其他水平。第三个变量，所有水平都为0。实在是麻烦，而且不容易理解。最好不要这样做，也就是，最好自变量都为连续变量。
+					</p>
+				</div>
+			</section>
+
+			<section v-show="article_number === 3" id="article2">
+				<h3 id="title2">K邻近</h3>
+				<div id="content2">
+					<p>
+					</p>
+				</div>
+			</section>
+
+			<section v-show="article_number === 4" id="article2">
+				<h3 id="title2">支持向量机</h3>
+				<div id="content2">
+					<p>
+					</p>
+				</div>
+			</section>
+
+			<section v-show="article_number === 5" id="article2">
+				<h3 id="title2">朴素贝叶斯</h3>
+				<div id="content2">
+					<p>
+					</p>
+				</div>
+			</section>
+
+			<section v-show="article_number === 6" id="article2">
+				<h3 id="title2">人工神经网络</h3>
+				<div id="content2">
+					<p>
+					</p>
+				</div>
+			</section>
 		</article>
 	</main>
 </body>
+<script src="/static/vue.js"></script>
+<script src="/static/ml_tutorial/ml_tutorial.js"></script>
 </html>

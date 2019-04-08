@@ -1,46 +1,50 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html>
 <head>
 	<title>机器学习</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/static/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/mynavbar.css">
 	<link rel="stylesheet" href="/static/index/index.css">
 </head>
 
 <body>
-	<!-- 顶部导航header -->
-	<header class="navbar-inverse navbar-fixed-top">
+	<header class="navbar navbar-expand-md navbar-dark fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="/">机器学习网站</a>
-			<section>
-				<ul class="nav navbar-nav" id="ul1">
-					<li>
-						<a href="/ml_tutorial">入门教程</a>
+			<section id="mybrand">
+				<a class="navbar-brand" href="/">机器学习</a>
+			</section>
+			<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<section class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+				<ul class="navbar-nav">
+					<li class="nav-item mr-4">
+						<a class="nav-link" href="/tutorial">入门教程</a>
 					</li>
-					<li>
-						<a href="/ml_practice">实战教程</a>
+					<li class="nav-item mr-4">
+						<a class="nav-link" href="/practice">实战教程</a>
+					</li>
+					<li class="nav-item mr-4">
+						<a class="nav-link" href="/news">新闻资讯</a>
+					</li>
+				</ul>
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="/signin">登录</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/signup">注册</a>
 					</li>
 				</ul>
 			</section>
-			<section>
-				<ul class="nav navbar-nav" id="ul2">
-					<li class="active">
-						<a href="/signin">登录</a>
-					</li>
-					<li>
-						<a href="/signup">注册</a>
-					</li>
-				</ul>
-			</section>
-		</div>
 	</header>
 
 	<!-- 中间的导航栏 -->
 	<nav class="container jumbotron jumbotron-fluid">
 	</nav>
 
-	<!-- 主体内容 -->
 	<main class="container">
 		<hr class="featurette-divider">
 		<section class="row featurette">
@@ -129,9 +133,9 @@
 			<a href="#top">回到顶部</a>
 		</p>
 	</main>
-	<!-- 底部版权信息 -->
-	<footer class="navbar-inverse">
-		<a href="">关于</a>
+
+	<footer>
+		<a href="/about">关于</a>
 	</footer>
 </body>
 </html>

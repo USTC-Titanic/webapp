@@ -5,6 +5,7 @@ from feature_vis import FeatureVisHandler
 from ml_tutorial import MLTutorial
 from ml_practice import MLPractice
 from ml_predict import MLPredictHandler
+from news import NewsHandler
 from database import init_db
 
 app = Flask(__name__)
@@ -23,9 +24,11 @@ if __name__ == '__main__':
 	app.add_url_rule( '/signup', view_func=SignupHandler.as_view('signup') )
 	app.add_url_rule( '/signout', view_func=SignoutHandler.as_view('signout') )
 	app.add_url_rule( '/feature_vis', view_func=FeatureVisHandler.as_view('feature_vis') )
-	app.add_url_rule( '/ml_tutorial', view_func=MLTutorial.as_view('ml_tutorial') )
-	app.add_url_rule( '/ml_practice', view_func=MLPractice.as_view('ml_practice') )
-	app.add_url_rule( '/ml_predict', view_func=MLPredictHandler.as_view('ml_predict') )
+	app.add_url_rule( '/tutorial', view_func=MLTutorial.as_view('ml_tutorial') )
+	app.add_url_rule( '/practice', view_func=MLPractice.as_view('ml_practice') )
+	app.add_url_rule( '/news', view_func=NewsHandler.as_view('news') )
+	app.add_url_rule( '/predict', view_func=MLPredictHandler.as_view('ml_predict') )
 	context = ('../ssl/server.cer', '../ssl/server.key')
 	# app.run(port=443, host='0.0.0.0', debug=True, ssl_context=context)
+	# app.run(port=8000, host='127.0.0.1', debug=True)
 	app.run(port=8080, host='0.0.0.0', debug=True)

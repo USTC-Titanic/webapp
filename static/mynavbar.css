@@ -1,0 +1,91 @@
+h3 {
+	margin-top: 8px;
+}
+
+body {
+	padding-top: 64px;
+}
+
+body > header{
+	background-color: #000;
+}
+
+#mybrand{
+	width: 20%;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+#navbarCollapse{
+	width: 80%;
+	padding-left: 24px;
+}
+
+body > main > article {
+	width: 80%;
+	float: right;
+	margin-bottom: 96px;
+	padding: 8px;
+	word-wrap: break-word;
+}
+
+body > main > article > section {
+	padding: 0, 8px, 0, 8px;
+}
+
+aside {
+	width: 20%;
+	float: left;
+	padding: 16px;
+}
+
+#sidebar {
+	border: 1px solid #E8E8E8;
+}
+
+#sidebar-title {
+	background: linear-gradient(#ffffff, #f3f3f3);
+	height: 48px;
+
+	/* TODO: flex, 学习 flex 布局 */
+	display: flex;
+	display: -webkit-flex;
+
+	/* vertical */
+	align-items: center;
+	/* horizontal */
+	justify-content: center;
+}
+
+#sidebar-menu {
+	padding: 16px;
+	text-align: center;
+}
+
+#sidebar-menu > li{
+	list-style-type: none;
+	line-height: 32px;
+	cursor: pointer;
+	color: #777;
+}
+
+#sidebar-menu > li:hover{
+	color: #000;
+}
+
+body > footer{
+	height: 64px;
+	line-height: 64px;
+	margin-top: 80px;
+
+	background-color: #000;
+	display: flex;
+	display: -webkit-flex;
+
+	/* horizontal */
+	justify-content: center;
+}
+
+body > footer > a {
+	color: #fff;
+}
