@@ -46,7 +46,7 @@ if __name__ == '__main__':
 	# args = ()
 	db = Database()
 	record_list = db.query_db(sql, args)
-	if record_list:
-		print(record_list)
+	# if record_list:
+	# 	print(record_list)
 	# for record in record_list:
 		# print(*record)

@@ -23,7 +23,7 @@ def feature_engineering_test_data():
 
 	# 其他的缺失值填0
 	data_test = data_test.fillna(0)
-	print(data_test.dtypes)
+	# print(data_test.dtypes)
 	# 选取特征
 	dataset_X = data_test[['Sex', 'Age', 'Pclass', 'SibSp', 'Parch']].values
 	return PassengerId, dataset_X
@@ -72,19 +72,19 @@ def train():
 	lr_model = LinearRegression()
 	lr_model.fit(dataset_X, dataset_Y)
 	joblib.dump(lr_model, 'model_lr.joblib')
-	print('train finished')
+	# print('train finished')
 
 def gen_submission():
 	PassengerId, X_test = feature_engineering_test_data()
 	lr_model = joblib.load('model_lr.joblib')
 	Y_test = lr_model.predict(X_test)
-	print(Y_test)
+	# print(Y_test)
 	submission = pd.DataFrame({
 			"PassengerId": PassengerId,
 			"Survived": Y_test
 		})
 	submission.to_csv("titanic-submission.csv", index=False)
-	print('submission generated')
+	# print('submission generated')
 
 default_user_data = {
 	                  "Sex": ["male"],
@@ -104,7 +104,7 @@ def get_survival_index(user_data=default_user_data, rel_path='./'):
 
 def main():
 	survival_index = get_survival_index(user_data=default_user_data, rel_path='./')
-	print('done')
+	# print('done')
 
 if __name__ == '__main__':
 	# train()

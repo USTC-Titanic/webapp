@@ -10,11 +10,11 @@ class MLPredictHandler(PageHandler):
 
 	def post(self):
 		form = self.get_form()
-		print(form)
+		# print(form)
 		user_data = {}
 		for k, v in form.items():
 			user_data[k] = [v]
-		print(user_data)
+		# print(user_data)
 		
 		default_user_data = {
 		              "Sex": ["male"],
@@ -24,8 +24,8 @@ class MLPredictHandler(PageHandler):
 		              "SibSp": ["0"],
 		              "Parch": ["0"]
 		            }
-		print(default_user_data)
+		# print(default_user_data)
 		
 		survival_index = predict.get_survival_index(user_data=user_data, rel_path=rel_path)
-		print(survival_index)
+		# print(survival_index)
 		return self.render(str(survival_index))
