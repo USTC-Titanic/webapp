@@ -47,32 +47,30 @@
 				<div id="sidebar-title">新闻源</div>
 				<div>
 					<ul id="sidebar-menu">
-						<li v-on:click="article_number = 1">机器之心</li>
-						<li v-on:click="article_number = 2">36kr</li>
-						<li v-on:click="article_number = 3">虎嗅</li>
-						<li v-on:click="article_number = 4"></li>
-						<li v-on:click="article_number = 5"></li>
+						<li v-on:click="news_list = src_jiqizhixin">机器之心</li>
+						<li v-on:click="news_list = src_36kr">36kr</li>
+						<li v-on:click="news_list = src_readhub">readhub</li>
 					</ul>
 				</div>
 			</section>
 		</aside>
 		<article class="row">
-			<div class="col-6 newsitem" v-for="(news, key) in newslist" v-bind:key="key">
+			<div class="col-6 newsitem" v-for="(news, key) in news_list" v-bind:key="key">
 				<section class="newscard" v-bind:data-target="'#content-' + key" data-toggle="modal">
-					<div class="newsheader">{{ news.header }}</div>
+					<div class="newsheader">{{ news.title }}</div>
 					<div class="newsdigest">{{ news.content.substring(0, 32) }} ...</div>
 				</section>
 				<section class="modal fade" v-bind:id="'content-' + key" tabindex="-1">
 					<div class="modal-dialog modal-content">
 						<!-- <div class=""> -->
 							<div class="modal-header">
-								<h5 class="modal-title">{{ news.header }}</h5>
+								<h5 class="modal-title">{{ news.title }}</h5>
 							</div>
 
 							<div class="modal-body">{{ news.content }}</div>
 
 							<div class="modal-footer justify-content-between">
-								<div><time>30</time>min ago</div>
+								<div><time>{{ news.time | get_time_delay }}</time></div>
 								<div>
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 								</div>
@@ -88,5 +86,7 @@
 <script src="/static/jquery-3.2.1.slim.min.js"></script>
 <script src="/static/bootstrap.min.js"></script>
 <script src="/static/vue.js"></script>
+<script src="/static/axios.js"></script>
 <script src="/static/news/news.js"></script>
 </html>
+
