@@ -117,3 +117,21 @@
 		Ctrl + Insert => copy
 		Shift + Insert => paste
 		```
+
+	*	nohup, run a command immune to hangups, with output to a non-tty
+
+		一般来说, 在命令后面加上 `&`, 可以让命令在后台运行, 相当于 `fork` 出了一个子进程, 比如
+
+		```bash
+		python3 server.py &
+		```
+
+		但是如果 `shell` 被关掉了, 这些子进程就变成了僵尸进程, 我们的 `server` 也将不再对外提供服务
+
+		为了保证 `shell` 被关闭后, `server` 仍然正常运行, 我们需要借助 `nohup`, 用法也很简单, 直接在命令前加上 `nohup` 就可以了
+
+		```bash
+		nohup python3 server.py &
+		```
+
+		同时, `nohup` 还会帮我们把日志输出到当前文件夹下的 `nohup.out` 文件, 一举两得(因为关掉 `shell` 后, `stdout` 也被关掉了)
