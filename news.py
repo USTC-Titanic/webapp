@@ -116,6 +116,7 @@ fragment PageInfo on PageInfo {\
 			expires = now - last_modified > 600
 			return expires
 		except FileNotFoundError as e:
+			# 如果文件不存在, 则视为过期
 			return False
 
 	def load_news(self, filename):
