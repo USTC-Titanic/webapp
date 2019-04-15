@@ -3,9 +3,9 @@
 var app = new Vue({
 	el: '#newspage',
 	data: {
-		src_jiqizhixin: [],
+		src_netease: [],
 		src_36kr: [],
-		src_readhub: [],
+		src_huxiu: [],
 		news_list: [],
 	},
 	created: function(){
@@ -39,6 +39,11 @@ var app = new Vue({
 				.then( function(resp) {
 					self.src_36kr = resp.data;
 					self.news_list = resp.data;
+				});
+			var API_netease = `${self.pathname}?q=json&src=netease`;
+			axios.get(API_netease)
+				.then( function(resp) {
+					self.src_netease = resp.data;
 				});
 		},
 	}

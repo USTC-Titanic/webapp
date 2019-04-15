@@ -39,6 +39,7 @@
 					</li>
 				</ul>
 			</section>
+		</div>
 	</header>
 
 	<main class="container" id="newspage">
@@ -47,9 +48,9 @@
 				<div id="sidebar-title">新闻源</div>
 				<div>
 					<ul id="sidebar-menu">
-						<li v-on:click="news_list = src_jiqizhixin">机器之心</li>
+						<li v-on:click="news_list = src_netease">网易智能</li>
 						<li v-on:click="news_list = src_36kr">36kr</li>
-						<li v-on:click="news_list = src_readhub">readhub</li>
+						<li v-on:click="news_list = src_huxiu">虎嗅</li>
 					</ul>
 				</div>
 			</section>
@@ -68,6 +69,8 @@
 							</div>
 
 							<div class="modal-body">{{ news.content }}</div>
+
+							<div class="modal-body" v-show="news.url"><a v-bind:href="news.url">阅读原文</a></div>
 
 							<div class="modal-footer justify-content-between">
 								<div><time>{{ news.time | get_time_delay }}</time></div>
