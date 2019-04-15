@@ -135,3 +135,12 @@
 		```
 
 		同时, `nohup` 还会帮我们把日志输出到当前文件夹下的 `nohup.out` 文件, 一举两得(因为关掉 `shell` 后, `stdout` 也被关掉了)
+
+	*	[How to run scripts on start up?](https://askubuntu.com/questions/814/how-to-run-scripts-on-start-up)
+
+		```bash
+		crontab -e
+		@reboot /path/to/script
+		```
+
+		结合 `nohup` 一起使用
