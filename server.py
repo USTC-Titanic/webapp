@@ -6,6 +6,7 @@ from ml_tutorial import MLTutorial
 from ml_practice import MLPractice
 from ml_predict import MLPredictHandler
 from news import NewsHandler
+from blog import BlogHandler, PostHandler
 from database import init_db
 
 app = Flask(__name__)
@@ -27,6 +28,8 @@ if __name__ == '__main__':
 	app.add_url_rule( '/tutorial', view_func=MLTutorial.as_view('ml_tutorial') )
 	app.add_url_rule( '/practice', view_func=MLPractice.as_view('ml_practice') )
 	app.add_url_rule( '/news', view_func=NewsHandler.as_view('news') )
+	app.add_url_rule( '/blog', view_func=BlogHandler.as_view('blog') )
+	app.add_url_rule( '/blog/<int:id>', view_func=PostHandler.as_view('blogpost') )
 	app.add_url_rule( '/predict', view_func=MLPredictHandler.as_view('ml_predict') )
 	context = ('../ssl/server.cer', '../ssl/server.key')
 	# app.run(port=443, host='0.0.0.0', debug=True, ssl_context=context)

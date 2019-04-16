@@ -1,0 +1,24 @@
+.post-item:hover{
+	background-color: #e9ecef45;
+}
+
+.post-item{
+	padding:24px;
+}
+
+section.row {
+	padding: 48px;
+}
+
+h5{
+	width:100%;height:100%;
+}
+
+.update_date{
+	color:#999;
+}
+
+a{
+	cursor:pointer;
+	text-decoration: none !important;
+}
