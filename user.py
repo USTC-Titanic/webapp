@@ -82,7 +82,10 @@ def check_usable(form):
 class SignupHandler(PageHandler):
 	def get(self):
 		filename = 'user/signup.html'
-		return self.render_file(filename)
+		if self.is_valid_cookies():
+			return self.redirect_to_target('/')
+		else:
+			return self.render_file(filename)
 
 	def post(self):
 		form = self.get_form()
@@ -112,7 +115,7 @@ class SigninHandler(PageHandler):
 	def get(self):
 		filename = 'user/signin.html'
 		if self.is_valid_cookies():
-			return self.redirect_to_target()
+			return self.redirect_to_target('/')
 		else:
 			return self.render_file(filename)
 
