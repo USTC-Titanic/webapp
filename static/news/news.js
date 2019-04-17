@@ -45,6 +45,11 @@ var app = new Vue({
 				.then( function(resp) {
 					self.src_netease = resp.data;
 				});
+			var API_huxiu = `${self.pathname}?q=json&src=huxiu`;
+			axios.get(API_huxiu)
+				.then( function(resp) {
+					self.src_huxiu = resp.data;
+				});
 		},
 	}
 })

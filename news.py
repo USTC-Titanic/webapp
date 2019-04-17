@@ -4,12 +4,19 @@ import requests, json, re, os.path
 
 filename_36kr = 'db/36kr.json'
 filename_netease = 'db/netease.json'
+filename_huxiu = 'db/huxiu.json'
 url_36kr = 'https://36kr.com/api/newsflash?&per_page=20'
 url_netease = 'https://tech.163.com/special/00097UHL/smart_datalist.js?callback=data_callback'
+url_huxiu = 'https://www.huxiu.com/channel/104.html'
 
 re_netease_newstitle = re.compile(r'"title":"(.*)?"')
 re_netease_newsurl = re.compile(r'"docurl":"(.*)?"')
 re_netease_newstime = re.compile(r'"time":"(.*)?"')
+
+re_huxiu_newstitle = re.compile(r'<a class="transition" title="(.*)?"')
+re_huxiu_newscontent = re.compile(r'<div class="mob-sub">(.*)?</div>')
+re_huxiu_newsurl = re.compile(r'<a href="(.*)?" class="transition msubstr-row2" target="_blank">')
+re_huxiu_newstime = re.compile(r'<span class="time">')
 
 class Spider(object):
 	def get_news(self, src="36kr"):
@@ -23,6 +30,11 @@ class Spider(object):
 				return self.update_netease_news()
 			else:
 				return self.load_news(filename_netease)
+		elif src == 'huxiu':
+			if self.news_expire(filename_huxiu) == True:
+				return self.update_huxiu_news()
+			else:
+				return self.load_news(filename_huxiu)
 		else:
 			return '[{"title":"", "content":"", "time":""}]'
 
@@ -74,6 +86,34 @@ class Spider(object):
 			return news_list
 		except Exception as e:
 			pass
+
+	def update_huxiu_news(self):
+		headers = {
+			'cookie': 'screen=%7B%22w%22%3A1280%2C%22h%22%3A800%2C%22d%22%3A2%7D; __secdyid=1698668e15bf4b18595453f12da5d4133ad3da4a5ae59bd9021554868559; huxiu_analyzer_wcy_id=3hb72epa6i9cjutwleg9; gr_user_id=313549f5-bc21-464d-b11a-b2474351a6d1; b6a739d69e7ea5b6_gr_last_sent_cs1=0; grwng_uid=38b22c85-9b86-4994-bce4-e19ba58eb17e; _ga=GA1.2.510960547.1554868562; screen=%7B%22w%22%3A1280%2C%22h%22%3A800%2C%22d%22%3A2%7D; p_h5_u=7243040F-8775-454C-9AE9-E84128C0D72C; selectedStreamLevel=SD; b6a739d69e7ea5b6_gr_session_id=ede0a44a-03a4-435f-a103-d1dfdfb1d722; b6a739d69e7ea5b6_gr_last_sent_sid_with_cs1=ede0a44a-03a4-435f-a103-d1dfdfb1d722; _gid=GA1.2.480895303.1555469158; _gat=1; Hm_lvt_324368ef52596457d064ca5db8c6618e=1554868563,1555469158; b6a739d69e7ea5b6_gr_session_id_ede0a44a-03a4-435f-a103-d1dfdfb1d722=true; b6a739d69e7ea5b6_gr_cs1=0; Hm_lpvt_324368ef52596457d064ca5db8c6618e=1555469165; SERVERID=f60b85c1ffd425d843469f623dc2b612|1555469159|1555469148',
+			'dnt': '1',
+			'pragma': 'no-cache',
+			'referer': 'https://www.huxiu.com/',
+			'upgrade-insecure-requests': '1',
+			'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.92 Safari/537.36'
+		}
+
+		content = requests.Session().get(url_huxiu, headers=headers).text
+		news_list = []
+		title_list = re_huxiu_newstitle.findall(content)
+		content_list = re_huxiu_newscontent.findall(content)
+		newsurl_list = re_huxiu_newsurl.findall(content)
+		# newstime_list = re.re_huxiu_newstime.findall(content)
+		for i in range(20):
+			news = {}
+			news['title'] = title_list[i]
+			news['content'] = content_list[i]
+			news['url'] = 'https://www.huxiu.com/' + newsurl_list[i]
+			news['time'] = ''
+			news_list.append(news)
+		news_list = json.dumps(news_list, ensure_ascii=False)
+		with open(filename_huxiu, 'w', encoding='utf-8') as f:
+			f.write(news_list)
+		return news_list
 
 	def news_expire(self, filename):
 		'''

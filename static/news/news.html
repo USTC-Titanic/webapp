@@ -76,7 +76,7 @@
 							<div class="modal-body" v-show="news.url"><a v-bind:href="news.url">阅读原文</a></div>
 
 							<div class="modal-footer justify-content-between">
-								<div><time>{{ news.time | get_time_delay }}</time></div>
+								<div><time v-show="news.time">{{ news.time | get_time_delay }}</time></div>
 								<div>
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 								</div>
