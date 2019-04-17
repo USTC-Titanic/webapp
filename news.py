@@ -107,7 +107,7 @@ class Spider(object):
 			news = {}
 			news['title'] = title_list[i]
 			news['content'] = content_list[i]
-			news['url'] = 'https://www.huxiu.com/' + newsurl_list[i]
+			news['url'] = 'https://www.huxiu.com' + newsurl_list[i]
 			news['time'] = ''
 			news_list.append(news)
 		news_list = json.dumps(news_list, ensure_ascii=False)
