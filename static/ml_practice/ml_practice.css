@@ -1,0 +1,19 @@
+.my_pad_4{
+	padding: 4px;
+}
+
+.my_pad_8{
+	padding: 8px;
+}
+
+.my_pad_32{
+	padding: 32px;
+}
+
+.my_width_100pct{
+	width: 100%;
+}
+
+.result-style{
+	color:red;
+}

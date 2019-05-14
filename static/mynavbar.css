@@ -33,6 +33,10 @@ body > main > article > section {
 	padding: 0, 8px, 0, 8px;
 }
 
+section{
+	width: 100%;
+}
+
 aside {
 	width: 20%;
 	float: left;

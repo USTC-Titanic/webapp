@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/static/bootstrap.min.css">
 	<link rel="stylesheet" href="/static/mynavbar.css">
+	<link rel="stylesheet" href="/static/ml_practice/ml_practice.css">
 </head>
 
 <body>
@@ -188,10 +189,66 @@
 
 			<section v-show="article_number === 4" id="article4">
 				<h3 id="title4">模型运用</h1>
-				<div id="content4">
-					<p>
-						todo
-					</p>
+				<div id="content4" class="justify-content-center">
+					<div class="row justify-content-center my_pad_32">
+						<div class="col-auto">惠更斯号乘客信息</div>
+					</div>
+
+					<div class="row justify-content-center">
+						<div class="col-auto">
+							<form v-on:submit.prevent="do_submit_passenger_info">
+								<div class="form-row my_pad_4">
+									<div class="col">
+										<input class="form-control" placeholder="船舱等级" v-model="Pclass" required>
+									</div>
+								</div>
+
+								<div class="form-row my_pad_4">
+									<div class="col">
+										<input class="form-control" placeholder="姓名" v-model="Name" required>
+									</div>
+								</div>
+
+								<div class="form-row my_pad_4">
+									<div class="col">
+										<input class="form-control" placeholder="性别" v-model="Sex" required>
+									</div>
+								</div>
+
+								<div class="form-row my_pad_4">
+									<div class="col">
+										<input class="form-control" placeholder="年龄" v-model="Age" required>
+									</div>
+								</div>
+
+								<div class="form-row my_pad_4">
+									<div class="col">
+										<input class="form-control" placeholder="兄弟姐妹数量" v-model="SibSp" required>
+									</div>
+								</div>
+
+								<div class="form-row my_pad_4">
+									<div class="col">
+										<input class="form-control" placeholder="父母/孩子数量" v-model="Parch" required>
+									</div>
+								</div>
+
+								<div class="form-row my_pad_4">
+									<div class="col text-left">
+										<input class="form-control result-style" placeholder="生存指数: " v-model="response" disabled>
+									</div>
+								</div>
+
+								<div class="form-row my_pad_4">
+									<div class="col">
+										<button class="btn btn-primary my_width_100pct">提交</button>
+									</div>
+								</div>
+
+							</form>
+						</div>
+					</div>
+
 				</div>
 			</section>
 
@@ -208,5 +265,6 @@
 </body>
 
 <script src="/static/vue.js"></script>
+<script src="/static/axios.js"></script>
 <script src="/static/ml_practice/ml_practice.js"></script>
 </html>
