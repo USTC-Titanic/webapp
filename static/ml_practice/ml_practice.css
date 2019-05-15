@@ -17,3 +17,39 @@
 .result-style{
 	color:red;
 }
+
+pre{
+	white-space: pre-wrap;
+}
+
+.grid-container{
+	display: grid;
+	grid-template-columns: auto auto auto auto;
+}
+
+.grid-header{
+	border: 1px solid;
+	grid-column: 1 / 5;
+}
+
+.grid-body{
+	border: 1px solid;
+	text-align: left;
+}
+
+.row{
+	margin: 0px;
+}
+
+.row > .col{
+	border: 1px solid rgba(86,61,124,.2);
+}
+
+article > section{
+	padding-bottom: 32px;
+}
+
+#mychart1, #mychart2, #mychart3, #mychart4, #mychart5{
+	width: 640px;
+	height: 400px;
+}
