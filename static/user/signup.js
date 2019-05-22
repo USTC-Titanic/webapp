@@ -1,6 +1,22 @@
 // MVC, View 和 Control 分开, 逻辑不要全部混在 html 里面
 'use strict';
 
+var myheader = new Vue({
+	el: '#myheader',
+	data:{
+		username: '',
+	},
+	created: function(){
+		let cookie = document.cookie;
+		let cookie_list = cookie.split(';')
+		for(let item of cookie_list){
+			if( item.indexOf('username=') != -1 ){
+				this.username = item.split('=')[1];
+			}
+		}
+	}
+});
+
 var re_username = /^[a-zA-Z0-9]{3,16}$/;
 var re_password = /^.{6,16}$/;
 var re_email = /^[\S]+@[\S]+.[\S]+$/
@@ -18,6 +34,15 @@ var app = new Vue({
 		verify: '',
 		email: '',
 		error_msg: '',
+	},
+	created: function(){
+		let cookie = document.cookie;
+		let cookie_list = cookie.split(';')
+		for(let item of cookie_list){
+			if( item.indexOf('username=') != -1 ){
+				this.username = item.split('=')[1];
+			}
+		}
 	},
 	methods:{
 		do_signup: function(){
@@ -54,11 +79,10 @@ var app = new Vue({
 					password: self.password,
 					email: self.email,
 				};
-				// var api_post = document.location.hostname;
-				// var api_post = document.location.pathname;
 				var api_post = '/signup'
 				axios.post(api_post, form)
 				.then(function(resp){
+					console.log(resp.data);
 					if( resp.data === 'taken' ){
 						self.error_msg = '用户名已被使用';
 						self.username = '';

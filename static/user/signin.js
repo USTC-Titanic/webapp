@@ -1,5 +1,21 @@
 'use strict';
 
+var myheader = new Vue({
+	el: '#myheader',
+	data:{
+		username: '',
+	},
+	created: function(){
+		let cookie = document.cookie;
+		let cookie_list = cookie.split(';')
+		for(let item of cookie_list){
+			if( item.indexOf('username=') != -1 ){
+				this.username = item.split('=')[1];
+			}
+		}
+	}
+});
+
 var re_username = /^[a-zA-Z0-9]{3,16}$/;
 var re_password = /^.{6,16}$/;
 
@@ -9,6 +25,15 @@ var app = new Vue({
 		username: '',
 		password: '',
 		error_msg: '',
+	},
+	created: function(){
+		let cookie = document.cookie;
+		let cookie_list = cookie.split(';')
+		for(let item of cookie_list){
+			if( item.indexOf('username=') != -1 ){
+				this.username = item.split('=')[1];
+			}
+		}
 	},
 	methods:{
 		do_signin: function() {
@@ -32,12 +57,15 @@ var app = new Vue({
 				var api_post = '/signin';
 				axios.post(api_post, form)
 				.then( function(resp){
-					if(  resp.data === 'sigin error' ){
+					if( resp.data === 'succ' ){
+						self.error_msg = '登录成功';
+						window.location.replace('/');
+					}
+					else if( resp.data === 'error' ){
 						self.error_msg = '用户名或密码错误';
 					}
 					else{
-						self.error_msg = '登录成功';
-						window.location.replace('/');
+						self.error_msg = '请重试';
 					}
 				})
 			}

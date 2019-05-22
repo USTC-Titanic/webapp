@@ -131,7 +131,7 @@ class SigninHandler(PageHandler):
 				user = User(record)
 				# sign in and set cookie
 				return self.login(user)
-		return self.render('invalid')
+		return self.render('error')
 
 class SignoutHandler(PageHandler):
 	def get(self):

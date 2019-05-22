@@ -4,13 +4,13 @@
 	<title>机器学习</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="/static/bootstrap.min.css">
+	<link href="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="/static/mynavbar.css">
 	<link rel="stylesheet" href="/static/index/index.css">
 </head>
 
 <body>
-	<header class="navbar navbar-expand-md navbar-dark fixed-top">
+	<header class="navbar navbar-expand-md navbar-dark fixed-top" id="myheader">
 		<div class="container">
 			<section id="mybrand">
 				<a class="navbar-brand" href="/">机器学习</a>
@@ -33,14 +33,26 @@
 						<a class="nav-link" href="/blog">开发日志</a>
 					</li>
 				</ul>
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<a class="nav-link" href="/signin">登录</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/signup">注册</a>
-					</li>
-				</ul>
+				<div v-if="username">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link" href="#">{{ username }}</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/signout">注销</a>
+						</li>
+					</ul>
+				</div>
+				<div v-else>
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link" href="/signin">登录</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/signup">注册</a>
+						</li>
+					</ul>
+				</div>
 			</section>
 		</div>
 	</header>
@@ -142,4 +154,9 @@
 		<a href="/about">关于</a>
 	</footer>
 </body>
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
+<script src="static/index/index.js"></script>
 </html>

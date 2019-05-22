@@ -42,7 +42,7 @@ class MarkdownParser(object):
 		url_api_github = 'https://api.github.com/markdown'
 		resp = self.sess.post(url_api_github, data=json.dumps(self.post_data))
 
-		return self.html % resp.text
+		return self.html % {'content': resp.text}
 
 parser = MarkdownParser()
 
