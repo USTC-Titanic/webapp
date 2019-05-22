@@ -1,0 +1,49 @@
+Titanic 特征分析2
+2019-04-16
+# 1.总体预览
+
+![clipboard.png](https://segmentfault.com/img/bVbqODH)
+
+```
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 891 entries, 0 to 890
+Data columns (total 12 columns):
+PassengerId    891 non-null int64
+Survived       891 non-null int64
+Pclass         891 non-null int64
+Name           891 non-null object
+Sex            891 non-null object
+Age            714 non-null float64
+SibSp          891 non-null int64
+Parch          891 non-null int64
+Ticket         891 non-null object
+Fare           891 non-null float64
+Cabin          204 non-null object
+Embarked       889 non-null object
+dtypes: float64(2), int64(5), object(5)
+memory usage: 83.6+ KB
+```
+
+训练集有891条数据，其中`Age`,`Cabin`,`Embarked`三个特征是有缺失值的，且`Cabin`的缺失值非常多。
+
+# 2.数据可视化
+
+![clipboard.png](https://segmentfault.com/img/bVbqOEl)
+
+仅按照性别划分，显然女性的生还数量明显高于男性
+
+![clipboard.png](https://segmentfault.com/img/bVbqOEq)
+
+`pclass`是船舱等级，等级越高生还概率越大
+
+![clipboard.png](https://segmentfault.com/img/bVbqOEu)
+
+`SibSp`代表兄弟姐妹/配偶的数量，只有一个兄弟姐妹/配偶的乘客生还人数最多
+
+![clipboard.png](https://segmentfault.com/img/bVbqOG7)
+
+`Parch`代表直系亲属即父母和子女的数量
+
+![clipboard.png](https://segmentfault.com/img/bVbqOHc)
+
+`Embarked`代表登船港口，C港口的生存概率最高

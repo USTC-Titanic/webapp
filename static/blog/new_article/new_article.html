@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+	<title>写文章</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/static/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/blog/new_article/new_article.css">
+	<script src="/static/vue.js"></script>
+</head>
+
+<body>
+	<main id="editor" class="container">
+
+		<div class="row justify-content-center">
+			<div class="col text-center">
+				<div id="article_header">新的文章</div>
+			</div>
+		</div>
+
+		<form v-on:submit.prevent="do_submit">
+			<div class="form-row">
+				<div class="col" id="article_title">
+					<input class="form-control" placeholder="标题" v-model="title" required>
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="col" id="article_content">
+					<textarea class="form-control" placeholder="内容" v-model="content" required></textarea>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col text-right">
+					<a href="/blog" class="btn btn-secondary">返回</a>
+					<button type="submit" class="btn btn-primary">提交</button>
+				</div>
+			</div>
+		</form>
+	</main>
+</body>
+<script src="/static/blog/new_article/new_article.js"></script>
+<script src="/static/axios.js"></script>
+</html>

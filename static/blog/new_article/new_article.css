@@ -1,0 +1,21 @@
+#article_header {
+    color: #222;
+    font-size: 40px;
+    font-weight: bold;
+    padding: 32px;
+}
+
+#article_title{
+    padding: 16px;
+}
+
+#article_content{
+    height: 600px;
+    padding: 16px;
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+    resize:none;
+}
