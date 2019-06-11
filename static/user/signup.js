@@ -19,6 +19,7 @@ var myheader = new Vue({
 
 var re_username = /^[a-zA-Z0-9]{3,16}$/;
 var re_password = /^.{6,16}$/;
+var re_nickname = /^.{3,16}$/;
 var re_email = /^[\S]+@[\S]+.[\S]+$/
 
 // for( var i = 0; i < 4; i++ ){
@@ -32,6 +33,7 @@ var app = new Vue({
 		username: '',
 		password: '',
 		verify: '',
+		nickname: '',
 		email: '',
 		error_msg: '',
 	},
@@ -64,12 +66,18 @@ var app = new Vue({
 				this.verify = '';
 				document.getElementsByTagName('input')[2].focus();
 			}
+			// 检查昵称是否合法
+			else if( re_nickname.test(this.nickname) == false ){
+				this.error_msg = '昵称不符合规则';
+				this.nickname = '';
+				document.getElementsByTagName('input')[3].focus();
+			}
 			// 检查邮箱
 			else if( re_email.test(this.email) === false )
 			{
 				this.error_msg = '邮箱不符合规则';
 				this.email = '';
-				document.getElementsByTagName('input')[3].focus();
+				document.getElementsByTagName('input')[4].focus();
 			}
 			else{
 				this.error_msg = '请稍等...';
@@ -77,6 +85,7 @@ var app = new Vue({
 				var form = {
 					username: self.username,
 					password: self.password,
+					nickname: self.nickname,
 					email: self.email,
 				};
 				var api_post = '/signup'
@@ -97,10 +106,10 @@ var app = new Vue({
 					}
 					else if( resp.data === 'error' ){
 						self.error_msg = '注册信息格式错误';
-						self.username = '';
-						self.password = '';
-						self.verify = '';
-						self.email = '';
+						// self.username = '';
+						// self.password = '';
+						// self.verify = '';
+						// self.email = '';
 					}
 				})
 			}
