@@ -43,9 +43,10 @@ class PageHandler(MethodView):
 
 	def login(self, user):
 		resp = make_response('succ')
-		resp.set_cookie(key='username', value=user.username, max_age=600)
+		resp.set_cookie(key='username', value=user.username, max_age=3600)
 		uid_and_digest = make_secure_cookie(user.uid, user.username)
-		resp.set_cookie(key='uid', value=uid_and_digest, max_age=600)
+		resp.set_cookie(key='uid', value=uid_and_digest, max_age=3600)
+		resp.set_cookie(key='nickname', value=user.nickname, max_age=3600)
 		return resp
 
 	def logout(self):
@@ -53,16 +54,25 @@ class PageHandler(MethodView):
 		resp = redirect(target)
 		resp.set_cookie(key='username', value='')
 		resp.set_cookie(key='uid', value='')
+		resp.set_cookie(key='nickname', value='')
 		return self.render(resp)
 
 	def is_valid_cookies(self):
 		try:
 			cookies = request.cookies
-			val = cookies.get('uid')
+			uid_and_digest = cookies.get('uid')
 			username = cookies.get('username')
-			return check_secure_cookies(val, username)
+			return check_secure_cookies(uid_and_digest, username)
 		except Exception as e:
 			return False
+
+	def get_username(self):
+		try:
+			cookies = request.cookies
+			username = cookies.get('username')
+			return username
+		except Exception as e:
+			return ''
 
 	def redirect_to_target(self, target='/'):
 		return self.render(redirect(target))

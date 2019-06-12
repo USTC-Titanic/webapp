@@ -11,6 +11,8 @@ def make_salt(length=5):
 	# return ''.join(salt)
 	return ''.join(random.choice(letters) for x in range(length))
 
+admin_username = 'ustcadmin'
+
 def make_pw_hash(username, password, salt=None):
 	if not salt:
 		salt = make_salt()
@@ -46,7 +48,7 @@ class Record(User):
 		return record_list
 
 	def retrieve_all(self):
-		sql = 'select uid, username, nickname, email from users'
+		sql = "select uid, username, nickname, email from users where username <> '%s'" % admin_username
 		args = ()
 		record_list = Database().query_db(sql, args)
 		resp = []
@@ -80,7 +82,6 @@ def check_valid(form):
 	elif not re_password.match(form['password']):
 		return False
 	elif not re_nickname.match(form['nickname']):
-		print('empty')
 		return False
 	elif not re_email.match(form['email']):
 		return False
@@ -105,7 +106,6 @@ class SignupHandler(PageHandler):
 
 	def post(self):
 		form = self.get_form()
-		print(form)
 		# 检查用户名, 密码, 昵称, 邮箱是否符合规则
 		if check_valid(form) == True:
 			# 检查用户名是否可用
@@ -161,7 +161,7 @@ class AdminHandler(PageHandler):
 	def is_admin(self):
 		if self.is_valid_cookies():
 			username = self.get_username()
-			if username == 'ustcadmin':
+			if username == admin_username:
 				return True
 		# return False
 		return True
@@ -172,6 +172,7 @@ class AdminHandler(PageHandler):
 		if self.is_admin():
 			if self.get_args('q') == 'json':
 				resp = Record({}).retrieve_all()
+				print(resp)
 				return self.render(resp)
 			else:
 				return self.render_file(filename)
@@ -195,9 +196,7 @@ class AdminHandler(PageHandler):
 		return self.redirect_to_target('/signin')
 
 	def put(self):
-		print('put')
-		return self.render('put')
+		return self.render('ok')
 
 	def delete(self):
-		print('delete')
-		return self.render('delete')
+		return self.render('ok')
