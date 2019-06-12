@@ -48,13 +48,16 @@ parser = MarkdownParser()
 
 class ArticleHandler(PageHandler):
 	def get(self, id):
-		with open('static/blog/article_list/article_%d.md' % id) as f:
-			f.readline()
-			f.readline()
-			md_content = f.read()
-
-		html = parser.get_html(md_content)
-		return self.render(html)
+		try:
+			with open('static/blog/article_list/article_%d.md' % id) as f:
+				f.readline()
+				f.readline()
+				md_content = f.read()
+	
+			html = parser.get_html(md_content)
+			return self.render(html)
+		except Exception as e:
+			return self.redirect_to_target('/blog')
 		
 	def post(self):
 		return BlogHandler().get()
