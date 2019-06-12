@@ -14,7 +14,7 @@ re_netease_newsurl = re.compile(r'"docurl":"(.*)?"')
 re_netease_newstime = re.compile(r'"time":"(.*)?"')
 
 re_huxiu_newstitle = re.compile(r'<a class="transition" title="(.*)?"')
-re_huxiu_newscontent = re.compile(r'<div class="mob-sub">(.*)?</div>')
+re_huxiu_newscontent = re.compile(r'<div class="mob-sub">\n(.*)?</div>')
 re_huxiu_newsurl = re.compile(r'<a href="(.*)?" class="transition msubstr-row2" target="_blank">')
 re_huxiu_newstime = re.compile(r'<span class="time">')
 
@@ -89,15 +89,16 @@ class Spider(object):
 
 	def update_huxiu_news(self):
 		headers = {
-			'cookie': 'screen=%7B%22w%22%3A1280%2C%22h%22%3A800%2C%22d%22%3A2%7D; __secdyid=1698668e15bf4b18595453f12da5d4133ad3da4a5ae59bd9021554868559; huxiu_analyzer_wcy_id=3hb72epa6i9cjutwleg9; gr_user_id=313549f5-bc21-464d-b11a-b2474351a6d1; b6a739d69e7ea5b6_gr_last_sent_cs1=0; grwng_uid=38b22c85-9b86-4994-bce4-e19ba58eb17e; _ga=GA1.2.510960547.1554868562; screen=%7B%22w%22%3A1280%2C%22h%22%3A800%2C%22d%22%3A2%7D; p_h5_u=7243040F-8775-454C-9AE9-E84128C0D72C; selectedStreamLevel=SD; b6a739d69e7ea5b6_gr_session_id=ede0a44a-03a4-435f-a103-d1dfdfb1d722; b6a739d69e7ea5b6_gr_last_sent_sid_with_cs1=ede0a44a-03a4-435f-a103-d1dfdfb1d722; _gid=GA1.2.480895303.1555469158; _gat=1; Hm_lvt_324368ef52596457d064ca5db8c6618e=1554868563,1555469158; b6a739d69e7ea5b6_gr_session_id_ede0a44a-03a4-435f-a103-d1dfdfb1d722=true; b6a739d69e7ea5b6_gr_cs1=0; Hm_lpvt_324368ef52596457d064ca5db8c6618e=1555469165; SERVERID=f60b85c1ffd425d843469f623dc2b612|1555469159|1555469148',
+			'cookie': 'screen=%7B%22w%22%3A1920%2C%22h%22%3A1080%2C%22d%22%3A1%7D; __secdyid=139ee5de69fc28ee22ffa89749dd0103df407ad591e4b7e8021560340699; huxiu_analyzer_wcy_id=8nyvxpfjeo4tum2e1u; _ga=GA1.2.1960581182.1560340745; _gid=GA1.2.848048874.1560340745; Hm_lvt_324368ef52596457d064ca5db8c6618e=1560340745; screen=%7B%22w%22%3A1920%2C%22h%22%3A1080%2C%22d%22%3A1%7D; gr_user_id=70084581-725c-4c06-9db1-dca89885f24e; b6a739d69e7ea5b6_gr_session_id=cb2d59d8-b845-469c-8673-a0a9c0646acc; b6a739d69e7ea5b6_gr_last_sent_sid_with_cs1=cb2d59d8-b845-469c-8673-a0a9c0646acc; b6a739d69e7ea5b6_gr_last_sent_cs1=0; b6a739d69e7ea5b6_gr_session_id_cb2d59d8-b845-469c-8673-a0a9c0646acc=true; grwng_uid=d02cd121-939e-487c-8327-4a9b4547f044; p_h5_u=2AF82B13-E42E-4B72-B755-DFB4FF424241; selectedStreamLevel=SD; Hm_lpvt_324368ef52596457d064ca5db8c6618e=1560341123; b6a739d69e7ea5b6_gr_cs1=0; SERVERID=f60b85c1ffd425d843469f623dc2b612|1560341080|1560340699',
 			'dnt': '1',
-			'pragma': 'no-cache',
-			'referer': 'https://www.huxiu.com/',
+			'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+			'accept-encoding': 'gzip, deflate, br',
+			'accept-language': 'zh-CN,zh;q=0.9',
 			'upgrade-insecure-requests': '1',
-			'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.92 Safari/537.36'
+			'user-agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36'
 		}
 
-		content = requests.Session().get(url_huxiu, headers=headers).text
+		content = requests.Session().get(url_huxiu, headers=headers).text.replace('<span class="original-tag">原创</span>\n', '')
 		news_list = []
 		title_list = re_huxiu_newstitle.findall(content)
 		content_list = re_huxiu_newscontent.findall(content)
@@ -106,7 +107,7 @@ class Spider(object):
 		for i in range(20):
 			news = {}
 			news['title'] = title_list[i]
-			news['content'] = content_list[i]
+			news['content'] = content_list[i].lstrip(' ')
 			news['url'] = 'https://www.huxiu.com' + newsurl_list[i]
 			news['time'] = ''
 			news_list.append(news)
