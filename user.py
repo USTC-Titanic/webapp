@@ -56,10 +56,18 @@ class Record(User):
 			resp.append(dict(record))
 		return json.dumps(resp)
 
+	def cnt_all(self):
+		sql = 'select count(*) cnt from users'
+		args = ()
+		res = Database().query_db(sql, args)[0]['cnt']
+		return res
+
 	def update(self):
-		sql = 'update users set passwd_hash = ?, nickname = ?, email = ? where username = ?'
-		passwd_hash = make_pw_hash(self.username, self.password)
-		args = (passwd_hash, self.nickname, self.email, self.username)
+		# sql = 'update users set passwd_hash = ?, nickname = ?, email = ? where username = ?'
+		sql = 'update users set nickname = ?, email = ? where username = ?'
+		# passwd_hash = make_pw_hash(self.username, self.password)
+		# args = (passwd_hash, self.nickname, self.email, self.username)
+		args = (self.nickname, self.email, self.username)
 		record_list = Database().query_db(sql, args)
 		return record_list
 
@@ -171,8 +179,11 @@ class AdminHandler(PageHandler):
 		# return self.render_file(filename)
 		if self.is_admin():
 			if self.get_args('q') == 'json':
+				record = Record({})
+				# resp = '{"cnt": "%d",' % record.cnt_all() + '"userlist": %s}' % record.retrieve_all()
 				resp = Record({}).retrieve_all()
-				print(resp)
+				# resp = Record({}).cnt_all()
+				# resp = Record({}).retrieve_all()
 				return self.render(resp)
 			else:
 				return self.render_file(filename)
@@ -196,7 +207,83 @@ class AdminHandler(PageHandler):
 		return self.redirect_to_target('/signin')
 
 	def put(self):
-		return self.render('ok')
+		# update
+		try:
+			if self.is_admin():
+				form = self.get_form()
+				record = Record(form)
+				record.update()
+				return self.render('ok')
+			else:
+				return self.render('error')
+		except Exception as e:
+			return self.render('error')
 
 	def delete(self):
-		return self.render('ok')
+		try:
+			if self.is_admin():
+				username = self.get_args('username')
+				form = {'username': username}
+				record = Record(form)
+				record.delete()
+				return self.render('ok')
+			else:
+				return self.render('error')
+		except Exception as e:
+			return self.render('error')
+
+# form = {'username': 'ustcadmin', 'password': 'captainJ', 'nickname': 'admin', 'email': 'admin@ustc.titanic'}
+# record = Record(form)
+# record.insert()
+
+# form = {'username': 'Alice', 'password': '321456', 'nickname': 'alice', 'email': 'alice@edu.c'}
+# record = Record(form)
+# record.insert()
+
+# form = {'username': 'Bob', 'password': '321456', 'nickname': 'bob', 'email': 'bob@edu.b'}
+# record = Record(form)
+# record.insert()
+
+# form = {'username': 'Clark', 'password': '321456', 'nickname': 'clark', 'email': 'clark@edu.a'}
+# record = Record(form)
+# record.insert()
+
+# form = {'username': 'Dirk', 'password': '321456', 'nickname': 'dirk', 'email': 'dirk@edu.c'}
+# record = Record(form)
+# record.insert()
+
+# form = {'username': 'Eva', 'password': '321456', 'nickname': 'eva', 'email': 'eva@edu.c'}
+# record = Record(form)
+# record.insert()
+
+# form = {'username': 'Falcon', 'password': '321456', 'nickname': 'falcon', 'email': 'falcon@edu.c'}
+# record = Record(form)
+# record.insert()
+
+# form = {'username': 'Green', 'password': '321456', 'nickname': 'green', 'email': 'green@edu.c'}
+# record = Record(form)
+# record.insert()
+
+# form = {'username': 'Hilbert', 'password': '321456', 'nickname': 'hilbert', 'email': 'Hilbert@edu.c'}
+# record = Record(form)
+# record.insert()
+
+# form = {'username': 'Isaias', 'password': '321456', 'nickname': 'Isaias', 'email': 'Isaias@edu.c'}
+# record = Record(form)
+# record.insert()
+
+# form = {'username': 'Jack', 'password': '321456', 'nickname': 'Jack', 'email': 'Jack@edu.c'}
+# record = Record(form)
+# record.insert()
+
+# form = {'username': 'Karl', 'password': '321456', 'nickname': 'karl', 'email': 'karl@edu.c'}
+# record = Record(form)
+# record.insert()
+
+# form = {'username': 'Lee', 'password': '321456', 'nickname': 'Lee', 'email': 'lee@edu.c'}
+# record = Record(form)
+# record.insert()
+
+# form = {'username': 'Melon', 'password': '321456', 'nickname': 'Melon', 'email': 'melon@edu.c'}
+# record = Record(form)
+# record.insert()

@@ -1,9 +1,9 @@
-/*main {*/
-/*	padding: 160px;*/
-/*}*/
-
 .mypadding-64{
 	padding: 64px;
+}
+
+.mypadding-16{
+	padding: 16px;
 }
 
 .form-row{
@@ -12,4 +12,9 @@
 
 .modal{
 	top: 24%;
+}
+
+.mypagination{
+	width: 64px;
+    text-align: center;
 }
