@@ -20,11 +20,14 @@
 		</section>
 
 		<section class="row justify-content-end mypadding-16" style="margin: 16px;">
-			<div class="col-2" style="padding: 4px;">
-				<input type="text" placeholder="用户名">
+			<div class="col-3">
+				<input class="form-control" type="text" placeholder="用户名" v-model="keyword">
 			</div>
-			<div class="col-1 text-right">
-				<button class="btn btn-primary" v-on:click="doCreate()">查找</button>
+			<div class="col-1">
+				<button class="btn btn-primary" v-on:click="doSearch()">查找</button>
+			</div>
+			<div class="col-1">
+				<button class="btn btn-secondary" v-on:click="doCancel()">取消</button>
 			</div>
 		</section>
 

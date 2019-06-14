@@ -179,12 +179,24 @@ class AdminHandler(PageHandler):
 		# return self.render_file(filename)
 		if self.is_admin():
 			if self.get_args('q') == 'json':
-				record = Record({})
+				form = {}
+				username = self.get_args('username')
+				if username:
+					form['username'] = username
+					record_list = Record(form).retrieve()
+					resp = []
+					for record in record_list:
+						resp.append(dict(record))
+					if len(resp) == 0:
+						resp = 'error'
+					else:
+						resp = json.dumps(resp)
+				else:
+					resp = Record({}).retrieve_all()
+				return self.render(resp)
 				# resp = '{"cnt": "%d",' % record.cnt_all() + '"userlist": %s}' % record.retrieve_all()
-				resp = Record({}).retrieve_all()
 				# resp = Record({}).cnt_all()
 				# resp = Record({}).retrieve_all()
-				return self.render(resp)
 			else:
 				return self.render_file(filename)
 		return self.redirect_to_target('/signin')

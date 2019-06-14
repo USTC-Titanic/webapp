@@ -20,11 +20,33 @@ var app = new Vue({
 		curPage: 1,
 		index: 1,
 		maxPage: 1,
+		keyword: '',
+		tmpUserlist: [],
 	},
 	created: function(){
 		this.doRetrieve();
 	},
 	methods:{
+		doSearch: function(){
+			this.userlist = [];
+			this.maxLength = 0;
+			this.maxPage = 1;
+			let self = this;
+			axios.get(api + '&username=' + this.keyword)
+				.then( function(resp) {
+					if( resp.data != 'error' ){
+						self.userlist = resp.data;
+						self.maxLength = self.userlist.length;
+						self.maxPage = parseInt(this.maxLength / 5) + 1;
+					}
+				});
+		},
+		doCancel: function(){
+			this.keyword = '';
+			this.userlist = this.tmpUserlist;
+			this.maxLength = this.userlist.length;
+			this.maxPage = parseInt(this.maxLength / 5) + 1;
+		},
 		doCreate: function(){
 			
 		},
@@ -33,6 +55,7 @@ var app = new Vue({
 			axios.get(api)
 				.then( function(resp){
 					self.userlist = resp.data;
+					self.tmpUserlist = resp.data;
 					self.maxLength = self.userlist.length;
 					self.maxPage = parseInt(self.maxLength / 5) + 1;
 				});
