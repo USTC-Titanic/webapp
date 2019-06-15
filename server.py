@@ -1,6 +1,6 @@
 from flask import Flask
 from index import IndexHandler
-from user import SignupHandler, SigninHandler, SignoutHandler, AdminHandler
+from user import SignupHandler, SigninHandler, SignoutHandler, AdminHandler, ProfileHandler
 from feature_vis import FeatureVisHandler
 from ml_tutorial import MLTutorial
 from ml_practice import MLPractice
@@ -25,6 +25,7 @@ if __name__ == '__main__':
 	app.add_url_rule( '/signup', view_func=SignupHandler.as_view('signup') )
 	app.add_url_rule( '/signout', view_func=SignoutHandler.as_view('signout') )
 	app.add_url_rule( '/admin', view_func=AdminHandler.as_view('admin') )
+	app.add_url_rule( '/profile', view_func=ProfileHandler.as_view('profile') )
 	app.add_url_rule( '/feature_vis', view_func=FeatureVisHandler.as_view('feature_vis') )
 	app.add_url_rule( '/tutorial', view_func=MLTutorial.as_view('ml_tutorial') )
 	app.add_url_rule( '/practice', view_func=MLPractice.as_view('ml_practice') )

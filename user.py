@@ -63,11 +63,20 @@ class Record(User):
 		return res
 
 	def update(self):
-		# sql = 'update users set passwd_hash = ?, nickname = ?, email = ? where username = ?'
-		sql = 'update users set nickname = ?, email = ? where username = ?'
-		# passwd_hash = make_pw_hash(self.username, self.password)
-		# args = (passwd_hash, self.nickname, self.email, self.username)
-		args = (self.nickname, self.email, self.username)
+		if len(self.password) != 0:
+			sql = 'update users set passwd_hash = ?, nickname = ?, email = ? where username = ?'
+			passwd_hash = make_pw_hash(self.username, self.password)
+			args = (passwd_hash, self.nickname, self.email, self.username)
+		else:
+			sql = 'update users set nickname = ?, email = ? where username = ?'
+			args = (self.nickname, self.email, self.username)
+		record_list = Database().query_db(sql, args)
+		return record_list
+
+	def update_password(self):
+		sql = 'update users set passwd_hash = ? where username = ?'
+		passwd_hash = make_pw_hash(self.username, self.password)
+		args = (passwd_hash, self.username)
 		record_list = Database().query_db(sql, args)
 		return record_list
 
@@ -171,8 +180,8 @@ class AdminHandler(PageHandler):
 			username = self.get_username()
 			if username == admin_username:
 				return True
-		# return False
-		return True
+		return False
+		# return True
 
 	def get(self):
 		filename = 'user/admin.html'
@@ -243,6 +252,30 @@ class AdminHandler(PageHandler):
 				return self.render('error')
 		except Exception as e:
 			return self.render('error')
+
+class ProfileHandler(PageHandler):
+	def get(self):
+		filename = 'user/profile.html'
+		return self.render_file(filename)
+	
+	def put(self):
+		us_form = self.get_form()
+		us_username = us_form.get('username')
+		us_old_password = us_form.get('old_password')
+		us_password = us_form.get('password')
+		# TODO: regex
+
+		user = {'username': us_username}
+		query = Record(user)
+		record_list = query.retrieve()
+		if len(record_list) > 0:
+			record = dict(record_list[0])
+			s_passwd_hash = record.get('passwd_hash')
+			if check_pw_hash(us_username, us_old_password, s_passwd_hash):
+				query.password = us_password
+				query.update_password()
+				return self.render('ok')
+		return self.render('error')
 
 # form = {'username': 'ustcadmin', 'password': 'captainJ', 'nickname': 'admin', 'email': 'admin@ustc.titanic'}
 # record = Record(form)
