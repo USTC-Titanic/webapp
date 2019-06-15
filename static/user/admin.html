@@ -9,35 +9,72 @@
 	<link rel="stylesheet" href="/static/user/admin.css">
 </head>
 <body>
-	<main class="container" id="adminpanel">
+	<header class="navbar navbar-expand-md navbar-dark fixed-top" id="myheader">
+		<div class="container">
+			<section id="mybrand">
+				<a class="navbar-brand" href="/">机器学习</a>
+			</section>
+			<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<section class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+				<ul class="navbar-nav">
+					<li class="nav-item mr-4">
+						<a class="nav-link" href="/tutorial">入门教程</a>
+					</li>
+					<li class="nav-item mr-4">
+						<a class="nav-link" href="/practice">实战教程</a>
+					</li>
+					<li class="nav-item mr-4">
+						<a class="nav-link" href="/news">新闻资讯</a>
+					</li>
+					<li class="nav-item mr-4">
+						<a class="nav-link" href="/blog">开发日志</a>
+					</li>
+				</ul>
+				<div v-if="nickname">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link" href="/profile">{{ nickname }}</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/signout">注销</a>
+						</li>
+					</ul>
+				</div>
+				<div v-else>
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link" href="/signin">登录</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/signup">注册</a>
+						</li>
+					</ul>
+				</div>
+			</section>
+		</div>
+	</header>
 
-		<section class="row mypadding-64">
+	<main class="container" id="adminpanel">
+		<section class="row">
 			<div class="col text-center">
 				<h2>用户管理</h2>
-				<!-- <button class="btn btn-primary" v-on:click="doCreate()">新增</button> -->
-				<!-- <button class="btn btn-danger">删除</button> -->
 			</div>
 		</section>
 
 		<section class="row justify-content-end mypadding-16" style="margin: 16px;">
-			<div class="col-3">
-				<input class="form-control" type="text" placeholder="用户名" v-model="keyword">
-			</div>
-			<div class="col-1">
-				<button class="btn btn-primary" v-on:click="doSearch()">查找</button>
-			</div>
-			<div class="col-1">
-				<button class="btn btn-secondary" v-on:click="doCancel()">取消</button>
+			<div class="col-4">
+				<input class="form-control" type="text" placeholder="搜索（用户名或昵称）" v-model="keyword">
 			</div>
 		</section>
-
 
 		<table class="table table-striped table-hover mypadding-16">
 			<thead>
 				<tr>
-					<th scope="col" style="width:16%">序号</th>
-					<th scope="col">用户名</th>
-					<th scope="col">昵称</th>
+					<th scope="col" style="width:20%">序号</th>
+					<th scope="col" style="width:20%">用户名</th>
+					<th scope="col" style="width:20%">昵称</th>
 					<th scope="col" style="width:20%">邮箱</th>
 					<th scope="col" style="width:20%">操作</th>
 				</tr>
@@ -78,6 +115,13 @@
 							<div class="col-2" style="padding: 6px 12px 6px 12px;">邮箱</div>
 							<div class="col-8">
 								<input tpye="text" class="form-control" v-model="user.email" placeholder="邮箱" required>
+							</div>
+						</div>
+
+						<div class="form-row">
+							<div class="col-2" style="padding: 6px 12px 6px 12px;">密码</div>
+							<div class="col-8">
+								<input type="password" class="form-control" v-model="user.password" placeholder="新密码">
 							</div>
 						</div>
 					</div>

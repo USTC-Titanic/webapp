@@ -1,6 +1,21 @@
 'use strict';
 
-var re_username = /^[a-zA-Z0-9]{3,16}$/;
+var myheader = new Vue({
+	el: '#myheader',
+	data:{
+		nickname: '',
+	},
+	created: function(){
+		let cookie = document.cookie;
+		let cookie_list = cookie.split(';')
+		for(let item of cookie_list){
+			if( item.indexOf('nickname=') != -1 ){
+				this.nickname = item.split('=')[1];
+			}
+		}
+	}
+});
+
 var re_password = /^.{6,16}$/;
 var api = '/admin?q=json';
 
@@ -13,6 +28,7 @@ var app = new Vue({
 		user: {
 			uid: 0,
 			username: '',
+			password: '',
 			nickname: '',
 			email: '',
 		},
@@ -26,20 +42,30 @@ var app = new Vue({
 	created: function(){
 		this.doRetrieve();
 	},
+	watch:{
+		keyword: function(){
+			let self = this;
+			let keyword = this.keyword;
+			let arr = this.tmpUserlist.filter( function(user){
+				return user.username.includes(keyword) === true || user.nickname.includes(keyword) === true || user.email.includes(keyword) === true;
+			})
+			let len = arr.length;
+			this.maxLength = len;
+			this.maxPage = parseInt(len / 5) + 1;
+			this.userlist = arr;
+		}
+	},
 	methods:{
 		doSearch: function(){
-			this.userlist = [];
-			this.maxLength = 0;
-			this.maxPage = 1;
-			let self = this;
-			axios.get(api + '&username=' + this.keyword)
-				.then( function(resp) {
-					if( resp.data != 'error' ){
-						self.userlist = resp.data;
-						self.maxLength = self.userlist.length;
-						self.maxPage = parseInt(this.maxLength / 5) + 1;
-					}
-				});
+			// this.userlist = [];
+			// for( let i = 0; i < this.maxLength; i++ ){
+			// 	let user = this.tmpUserlist[i];
+			// 	if( user.username.includes(this.keyword) ){
+			// 		this.userlist.push(this.tmpUserlist[i]);
+			// 	}
+			// }
+			// this.maxLength = this.userlist.length;
+			// this.maxPage = parseInt(this.maxLength) + 1;
 		},
 		doCancel: function(){
 			this.keyword = '';
@@ -77,30 +103,30 @@ var app = new Vue({
 			}
 		},
 		doUpdate: function(){
-			let user = this.userlist[this.index];
-			let self = this;
-			axios.put(api, self.user)
-				.then( function(resp) {
-					console.log(resp.data);
-					if( resp.data != 'ok' ){
-						self.error_msg = '操作失败';
-					}
-					else{
-						user.nickname = self.user.nickname;
-						user.email = self.user.email;
-					}
-				});
+			if( this.user.password != '' && re_password.test(this.user.password) === false ){
+				this.error_msg = '密码不符合规则';
+			}
+			else{
+				this.userlist[this.index].nickname = this.user.nickname;
+				this.userlist[this.index].email = this.user.email;
+				let self = this;
+				axios.put(api, self.user)
+					.then( function(resp) {
+						console.log(resp.data);
+						if( resp.data != 'ok' ){
+							self.error_msg = '操作失败';
+						}
+					});
+			}
 		},
 		doDelete: function(){
+			this.userlist.splice(self.index, 1);
 			let self = this;
 			axios.delete(api + '&username=' + self.user.username)
 				.then( function(resp) {
 					console.log(resp.data);
 					if( resp.data != 'ok' ){
 						self.error_msg = '操作失败';
-					}
-					else{
-						self.userlist.splice(self.index, 1);
 					}
 				});
 		},
