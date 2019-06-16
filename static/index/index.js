@@ -5,7 +5,7 @@ var myheader = new Vue({
 	data:{
 		nickname: '',
 	},
-    created: function(){
+	created: function(){
 		let cookie = document.cookie;
 		let cookie_list = cookie.split(';')
 		for(let item of cookie_list){

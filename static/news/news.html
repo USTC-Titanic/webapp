@@ -106,5 +106,35 @@
 <script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
 <script src="https://cdn.bootcss.com/axios/0.17.1/axios.js"></script>
 <script src="/static/news/news.js"></script>
+
+<section class="row justify-content-end">
+	<div class="col-1 text-right">
+		<button type="button" id="go-to-top" class="btn btn-sm btn-outline-primary" onclick="goToTop()" style="display: none; position: fixed; bottom: 80px; right: 16px;">↑</button>
+	</div>
+</section>
+
+<script type="text/javascript">
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function(){
+	if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+		document.getElementById("go-to-top").style.display = "block";
+	} else {
+		document.getElementById("go-to-top").style.display = "none";
+	}
+};
+
+// https://www.w3schools.com/tags/ev_onclick.asp
+// http://www.w3school.com.cn/jsref/met_win_setinterval.asp
+function goToTop(){
+	let t = setInterval( function(){
+		if( document.documentElement.scrollTop <= 0 ){
+			clearInterval(t);
+		}else{
+			document.documentElement.scrollTop -= 40;
+		}
+	}, 20);
+};
+</script>
+
 </html>
 
