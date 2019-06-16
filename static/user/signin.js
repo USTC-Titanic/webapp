@@ -3,14 +3,14 @@
 var myheader = new Vue({
 	el: '#myheader',
 	data:{
-		username: '',
+		nickname: '',
 	},
 	created: function(){
 		let cookie = document.cookie;
 		let cookie_list = cookie.split(';')
 		for(let item of cookie_list){
-			if( item.indexOf('username=') != -1 ){
-				this.username = item.split('=')[1];
+			if( item.indexOf('nickname=') != -1 ){
+				this.nickname = item.split('=')[1];
 			}
 		}
 	}
@@ -28,10 +28,11 @@ var app = new Vue({
 	},
 	created: function(){
 		let cookie = document.cookie;
-		let cookie_list = cookie.split(';')
+		let cookie_list = cookie.split(';');
 		for(let item of cookie_list){
 			if( item.indexOf('username=') != -1 ){
 				this.username = item.split('=')[1];
+				break;
 			}
 		}
 	},
