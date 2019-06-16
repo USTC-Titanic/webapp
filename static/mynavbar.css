@@ -76,20 +76,3 @@ aside {
 #sidebar-menu > li:hover{
 	color: #000;
 }
-
-body > footer{
-	height: 64px;
-	line-height: 64px;
-	margin-top: 80px;
-
-	background-color: #000;
-	display: flex;
-	display: -webkit-flex;
-
-	/* horizontal */
-	justify-content: center;
-}
-
-body > footer > a {
-	color: #fff;
-}
