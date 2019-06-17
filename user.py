@@ -12,6 +12,9 @@ def make_salt(length=5):
 	return ''.join(random.choice(letters) for x in range(length))
 
 admin_username = 'ustcadmin'
+admin_2 = 'lizhihao'
+admin_3 = 'yangjie'
+admin_4 = 'xumengqi'
 
 def make_pw_hash(username, password, salt=None):
 	if not salt:
@@ -48,7 +51,7 @@ class Record(User):
 		return record_list
 
 	def retrieve_all(self):
-		sql = "select uid, username, nickname, email from users where username <> '%s'" % admin_username
+		sql = "select uid, username, nickname, email from users where username <> '%s'" % admin_username + "and username <> '%s'" % admin_2 + "and username <> '%s'" % admin_3 + "and username <> '%s'" % admin_4
 		args = ()
 		record_list = Database().query_db(sql, args)
 		resp = []
@@ -178,7 +181,7 @@ class AdminHandler(PageHandler):
 	def is_admin(self):
 		if self.is_valid_cookies():
 			username = self.get_username()
-			if username == admin_username:
+			if username == admin_username or username == admin_2 or username == admin_3 or username == admin_4:
 				return True
 		return False
 		# return True
