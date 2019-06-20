@@ -144,3 +144,9 @@
 		```
 
 		结合 `nohup` 一起使用
+		
+	*	diff, 查看有多少处不同
+
+		```bash
+		diff file1 file2 | grep "^>" | wc -l
+		```
