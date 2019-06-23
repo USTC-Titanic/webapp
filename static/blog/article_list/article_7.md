@@ -1,0 +1,37 @@
+申请域名和公网 IP
+2019-04-17
+# 申请域名和公网 IP
+
+##	申请域名
+
+*	入门的话可以使用 [GoDaddy](https://www.godaddy.com) 的域名, 挑最便宜的那种就好了, 7 块钱能用一年. 另外 Godaddy 也有一整套完整的建站方案, 不过价格略贵.
+
+##	公网 IP
+
+*	可以选择租赁附赠公网 IP 的 VPS, 阿里云腾讯云啥的可能还会有一整套的解决方案, 不过价格会贵一点. 也可以尝试国外的 VPS 厂商, 如 digitalocean, vultr, linode, bandwagon等等, 总之选择一个价格实惠, 而且 IP 可以 ping 通的 VPS 即可.
+
+##	设置 DNS
+
+*	假设你已经获得了域名 `awesome.com` 的使用权.
+
+*	以 Godaddy 的 dashboard 为例, 点击头像进入【My Product (我的产品)】, 点击域名 `awesome.com` 中的【DNS】选项, 然后在 Records (记录) 中点击【add (添加)】.
+
+*	接下来, 【Type (类型)】选择 `A`, 也就是把 `domain -> ip` 的映射记录.
+
+*	【host (主机)】填写 `@`, 也就是域名 `awesome.com` 本身.
+
+*	【Points to (指向)】填写你的 VPS 的 IP 地址.
+
+*	【TTL】选择 1 Hour.
+
+*	按照上述方法, 再添加一条记录, 其中【host (主机)】填写 `www`, 也就是把 `www.awesome.com` 也解析到你的 IP. 稍等几分钟, 新添加的记录就会生效.
+
+*	接着, 回到你的 VPS 所在的 Dashboard, 进行类似的 DNS 解析设置即可.
+
+*	最后, 启动我们的 `httpserver`
+
+	```bash
+	python3 server.py
+	```
+
+	在浏览器中输入 `http://ustc-titanic` 即可访问我们的网站
