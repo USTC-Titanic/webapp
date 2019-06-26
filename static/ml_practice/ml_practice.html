@@ -57,14 +57,13 @@
 	<main class="container" id="practice">
 		<aside>
 			<section id="sidebar">
-				<div id="sidebar-title">泰坦尼克生存预测</div>
+				<div id="sidebar-title">真题训练</div>
 				<div>
 					<ul id="sidebar-menu">
 						<li v-on:click="article_number = 1">赛题简介</li>
 						<li v-on:click="article_number = 2">数据分析</li>
 						<li v-on:click="article_number = 3">特征工程</li>
 						<li v-on:click="article_number = 4">模型运用</li>
-						<li v-on:click="article_number = 5">赛题总结</li>
 					</ul>
 				</div>
 			</section>
@@ -73,7 +72,16 @@
 			<section v-show="article_number === 1" id="article1">
 				<h3 id="title1">赛题简介</h3>
 				<div id="content1">
-					<pre>{{ mycontent1 }}</pre>
+					<p>
+						泰坦尼克号沉没是历史上最臭名昭着的沉船之一。 1912年4月15日，在她的处女航中，泰坦尼克号在与冰山相撞后沉没，在2224名乘客和机组人员中造成1502人死亡。这场耸人听闻的悲剧震惊了国际社会，并为船舶制定了更好的安全规定。沉船造成这种生命损失的原因之一是乘客和船员没有足够的救生艇。尽管幸存下来有一些幸运因素，但有些人比其他人更容易生存，例如妇女，儿童和上层阶级。
+					</p>
+					<p>
+						在这一挑战中，我们要求分析什么样的乘客更可能存活下来。特别是，要求运用机器学习工具来预测哪些乘客能够幸免于悲剧。
+					</p>
+					<p>
+						这是一个实践分类问题的绝佳机会。基本背景是泰坦尼克号是一艘英国客轮，于1912年在北大西洋沉没，在她与冰山相撞之后从南安普敦到纽约市的处女航。在估计的2,224名乘客和船员中，超过1,500人死亡，使其成为现代历史上和平时期最致命的商业海洋灾难之一。 泰坦尼克号是她服役时最大的船舶，也是白星航线运营的三艘奥运级海洋内衬中的第二艘。她是由贝尔法斯特的Harland和Wolff造船厂建造的。当时造船厂的首席海军设计师托马斯安德鲁斯在灾难中丧生。
+					</p>
+					
 				</div>
 			</section>
 
@@ -81,63 +89,24 @@
 				<h3 id="title2">数据分析</h3>
 				<div id="content2">
 					<p>
-						Overview
+						概览
 					</p>
 					<p>
-						The data has been split into two groups:
+						数据集被分为两部分
 					</p>
 					<ul>
 						<li>
-							training set (train.csv)
+							训练集 (train.csv)
 						</li>
 						<li>
-							test set (test.csv)
+							测试集 (test.csv)
 						</li>
 					</ul>
 					<p>
-						The training set should be used to build your machine learning models. For the training set, we provide the outcome (also known as the “ground truth”) for each passenger. Your model will be based on “features” like passengers’ gender and class. You can also use feature engineering to create new features.
+						泰坦尼克数据集中，训练集有891条，测试集有418条。输入特征包括PassengerID（ID），Pclass（客舱等级，较为重要），Name（姓名，可提取出更多信息），Sex（性别，较为重要），Age（年龄，较为重要），Parch（直系亲友），SibSp（旁系），Ticket（票编号），Fare（票价），Cabin（客舱编号）和Embarked（上船的港口编号）。
 					</p>
 					<p>
-						The test set should be used to see how well your model performs on unseen data. For the test set, we do not provide the ground truth for each passenger. It is your job to predict these outcomes. For each passenger in the test set, use the model you trained to predict whether or not they survived the sinking of the Titanic.
-					</p>
-					<p>
-						We also include gender_submission.csv, a set of predictions that assume all and only female passengers survive, as an example of what a submission file should look like.
-					</p>
-					<p>
-						The training set should be used to build your machine learning models. For the training set, we provide the outcome (also known as the “ground truth”) for each passenger. Your model will be based on “features” like passengers’ gender and class. You can also use feature engineering to create new features.
-					</p>
-					<p>
-						The test set should be used to see how well your model performs on unseen data. For the test set, we do not provide the ground truth for each passenger. It is your job to predict these outcomes. For each passenger in the test set, use the model you trained to predict whether or not they survived the sinking of the Titanic.
-					</p>
-					<p>
-						We also include gender_submission.csv, a set of predictions that assume all and only female passengers survive, as an example of what a submission file should look like.
-					</p>
-					<p>
-						The training set should be used to build your machine learning models. For the training set, we provide the outcome (also known as the “ground truth”) for each passenger. Your model will be based on “features” like passengers’ gender and class. You can also use feature engineering to create new features.
-					</p>
-					<p>
-						The test set should be used to see how well your model performs on unseen data. For the test set, we do not provide the ground truth for each passenger. It is your job to predict these outcomes. For each passenger in the test set, use the model you trained to predict whether or not they survived the sinking of the Titanic.
-					</p>
-					<p>
-						We also include gender_submission.csv, a set of predictions that assume all and only female passengers survive, as an example of what a submission file should look like.
-					</p>
-					<p>
-						The training set should be used to build your machine learning models. For the training set, we provide the outcome (also known as the “ground truth”) for each passenger. Your model will be based on “features” like passengers’ gender and class. You can also use feature engineering to create new features.
-					</p>
-					<p>
-						The test set should be used to see how well your model performs on unseen data. For the test set, we do not provide the ground truth for each passenger. It is your job to predict these outcomes. For each passenger in the test set, use the model you trained to predict whether or not they survived the sinking of the Titanic.
-					</p>
-					<p>
-						We also include gender_submission.csv, a set of predictions that assume all and only female passengers survive, as an example of what a submission file should look like.
-					</p>
-					<p>
-						The training set should be used to build your machine learning models. For the training set, we provide the outcome (also known as the “ground truth”) for each passenger. Your model will be based on “features” like passengers’ gender and class. You can also use feature engineering to create new features.
-					</p>
-					<p>
-						The test set should be used to see how well your model performs on unseen data. For the test set, we do not provide the ground truth for each passenger. It is your job to predict these outcomes. For each passenger in the test set, use the model you trained to predict whether or not they survived the sinking of the Titanic.
-					</p>
-					<p>
-						We also include gender_submission.csv, a set of predictions that assume all and only female passengers survive, as an example of what a submission file should look like.
+						在这一挑战中，我们要求分析什么样的乘客更可能存活下来。特别是，要求运用机器学习工具来预测哪些乘客能够幸免于悲剧。
 					</p>
 				</div>
 			</section>
@@ -448,14 +417,6 @@
 				</div>
 			</section>
 
-			<section v-show="article_number === 5" id="article5">
-				<h3 id="title5">赛题总结</h3>
-				<div id="content5">
-					<p>
-						todo
-					</p>
-				</div>
-			</section>
 		</article>
 	</main>
 </body>
