@@ -120,8 +120,8 @@ var app = new Vue({
 			}
 		},
 		doDelete: function(){
-			this.userlist.splice(self.index, 1);
 			let self = this;
+			this.userlist.splice(self.index, 1);
 			axios.delete(api + '&username=' + self.user.username)
 				.then( function(resp) {
 					console.log(resp.data);
