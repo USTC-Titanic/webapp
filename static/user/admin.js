@@ -57,15 +57,15 @@ var app = new Vue({
 	},
 	methods:{
 		doSearch: function(){
-			// this.userlist = [];
-			// for( let i = 0; i < this.maxLength; i++ ){
-			// 	let user = this.tmpUserlist[i];
-			// 	if( user.username.includes(this.keyword) ){
-			// 		this.userlist.push(this.tmpUserlist[i]);
-			// 	}
-			// }
-			// this.maxLength = this.userlist.length;
-			// this.maxPage = parseInt(this.maxLength) + 1;
+			this.userlist = [];
+			for( let i = 0; i < this.maxLength; i++ ){
+				let user = this.tmpUserlist[i];
+				if( user.username.includes(this.keyword) ){
+					this.userlist.push(this.tmpUserlist[i]);
+				}
+			}
+			this.maxLength = this.userlist.length;
+			this.maxPage = parseInt(this.maxLength) + 1;
 		},
 		doCancel: function(){
 			this.keyword = '';
@@ -83,7 +83,7 @@ var app = new Vue({
 					self.userlist = resp.data;
 					self.tmpUserlist = resp.data;
 					self.maxLength = self.userlist.length;
-					self.maxPage = parseInt(self.maxLength / 5) + 1;
+					self.maxPage = parseInt((self.maxLength + 4) / 5);
 				});
 		},
 		openModal: function(index, operation){
@@ -120,8 +120,9 @@ var app = new Vue({
 			}
 		},
 		doDelete: function(){
+			this.userlist.splice(this.index, 1);
+			this.maxLength--;
 			let self = this;
-			this.userlist.splice(self.index, 1);
 			axios.delete(api + '&username=' + self.user.username)
 				.then( function(resp) {
 					console.log(resp.data);
