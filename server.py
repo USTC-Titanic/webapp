@@ -34,7 +34,14 @@ if __name__ == '__main__':
 	app.add_url_rule( '/blog/<int:id>', view_func=ArticleHandler.as_view('article') )
 	app.add_url_rule( '/blog/new', view_func=NewArticleHandler.as_view('new_article') )
 	app.add_url_rule( '/predict', view_func=MLPredictHandler.as_view('ml_predict') )
-	context = ('../ssl/server.cer', '../ssl/server.key')
-	# app.run(port=443, host='0.0.0.0', debug=True, ssl_context=context)
-	# app.run(port=8000, host='127.0.0.1', debug=True)
-	app.run(port=8080, host='0.0.0.0', debug=True)
+	import sys
+	argv = sys.argv
+	if len(argv) == 1:
+		# server
+		context = ('../ssl/server.cer', '../ssl/server.key')
+		app.run(port=443, host='0.0.0.0', debug=False, ssl_context=context)
+	else:
+		# local
+		# app.run(port=8000, host='0.0.0.0', debug=True)
+		app.run(port=8000, host='127.0.0.1', debug=True)
+	
