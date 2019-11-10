@@ -19,6 +19,16 @@ def init():
 # or add the next line before app.run
 # app.cli.command('initdb')(database.init_db)
 
+@app.after_request
+def add_header(response):
+	# cache
+	content_type = response.content_type
+	if 'css;' or 'javascript' or 'image' in content_type:
+		print(content_type)
+		response.headers['Cache-Control'] = 'public, max-age=43200'
+
+	return response
+
 if __name__ == '__main__':
 	app.add_url_rule( '/', view_func=IndexHandler.as_view('index') )
 	app.add_url_rule( '/signin', view_func=SigninHandler.as_view('signin') )
