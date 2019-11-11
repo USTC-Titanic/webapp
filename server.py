@@ -21,6 +21,9 @@ def init():
 
 @app.after_request
 def add_header(response):
+	# HSTS
+	response.headers['Strict-Transport-Security'] = 'max-age=15768000; includeSubDomains; preload'
+
 	# cache
 	content_type = response.content_type
 	if 'css;' or 'javascript' or 'image' in content_type:
