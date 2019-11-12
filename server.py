@@ -27,8 +27,10 @@ def add_header(response):
 	# cache
 	content_type = response.content_type
 	if 'css;' or 'javascript' or 'image' in content_type:
-		print(content_type)
 		response.headers['Cache-Control'] = 'public, max-age=43200'
+
+	if 'json' in content_type:
+		response.headers['Cache-Control'] = 'no-cache'
 
 	return response
 
