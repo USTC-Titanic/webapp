@@ -10,6 +10,11 @@ class PageHandler(MethodView):
 		resp = make_response(content)
 		return resp
 
+	def render_json(self, content):
+		resp = make_response(content)
+		resp.headers['content-type'] = 'application/json'
+		return resp
+
 	def render_file(self, filename):
 		filepath = base_path % filename
 		with open(filepath, 'r') as f:

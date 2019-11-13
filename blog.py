@@ -21,7 +21,7 @@ class BlogHandler(PageHandler):
 				# 	{'title': 'Titanic 特征分析1', 'update_date': '2019-04-16', 'id': '3'},
 				# 	{'title': 'Titanic 特征分析2', 'update_date': '2019-04-16', 'id': '4'},
 				# ]
-			return self.render( json.dumps(post_list, ensure_ascii=False) )
+			return self.render_json( json.dumps(post_list, ensure_ascii=False) )
 		else:
 			filename = 'blog/blog.html'
 			return self.render_file(filename)
