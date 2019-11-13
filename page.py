@@ -8,7 +8,6 @@ base_path = './static/%s'
 class PageHandler(MethodView):
 	def render(self, content):
 		resp = make_response(content)
-		resp.headers['Strict-Transport-Security'] = 'max-age=15768000; includeSubDomains; preload'
 		return resp
 
 	def render_file(self, filename):
