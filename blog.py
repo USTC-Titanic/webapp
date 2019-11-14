@@ -1,6 +1,7 @@
 from page import PageHandler
 import requests, json, os
 from time import gmtime
+from html import escape
 
 article_list_path = 'static/blog/article_list'
 
@@ -72,9 +73,9 @@ class NewArticleHandler(PageHandler):
 	
 	def post(self):
 		form = self.get_form()
-		title = form.get('title')
+		title = escape(form.get('title'))
+		content = escape(form.get('content'))
 		update_date = '%04d-%02d-%02d' % gmtime()[0:3]
-		content = form.get('content')
 		id = len(os.listdir(article_list_path)) + 1
 		with open('%s/article_%d.md' % (article_list_path, id), 'w') as f:
 			f.write(title + '\n' + update_date + '\n' + content)
