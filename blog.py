@@ -72,6 +72,7 @@ class NewArticleHandler(PageHandler):
 			return self.redirect_to_target('/signin')
 	
 	def post(self):
+		# TODO 鉴权，只有管理员可以写日志，其他人只能看
 		form = self.get_form()
 		title = escape(form.get('title'))
 		content = escape(form.get('content'))
