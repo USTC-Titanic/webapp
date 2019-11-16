@@ -11,11 +11,13 @@ class BlogHandler(PageHandler):
 			size = len(os.listdir(article_list_path)) + 1
 			post_list = []
 			for id in range(1, size):
-				with open('static/blog/article_list/article_%d.md' % id) as f:
-					title = f.readline()
-					update_date = f.readline()
-					post_list.append({'title': title, 'update_date': update_date, 'id': id})
-			
+				try:
+					with open('static/blog/article_list/article_%d.md' % id) as f:
+						title = f.readline()
+						update_date = f.readline()
+						post_list.append({'title': title, 'update_date': update_date, 'id': id})
+				except Exception as e:
+					pass
 				# post_list = [
 				# 	{'title': 'GitHub API 测试', 'update_date': '2019-04-16', 'id': '1'},
 				# 	{'title': '人工智能实验3: 基于TensorFlow的cpatcha注册码识别', 'update_date': '2019-04-16', 'id': '2'},
