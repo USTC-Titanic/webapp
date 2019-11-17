@@ -1,7 +1,7 @@
 from page import PageHandler
 import requests, json, os
 from time import gmtime
-from html import escape
+from html import escape, unescape
 
 article_list_path = 'static/blog/article_list'
 
@@ -13,7 +13,7 @@ class BlogHandler(PageHandler):
 			for id in range(1, size):
 				try:
 					with open('static/blog/article_list/article_%d.md' % id) as f:
-						title = f.readline()
+						title = unescape(f.readline())
 						update_date = f.readline()
 						post_list.append({'title': title, 'update_date': update_date, 'id': id})
 				except Exception as e:
