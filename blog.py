@@ -67,7 +67,7 @@ class ArticleHandler(PageHandler):
 		
 class NewArticleHandler(PageHandler):
 	def get(self):
-		if self.is_valid_cookies():
+		if self.is_valid_cookies() and self.is_admin():
 			filename = 'blog/new_article/new_article.html'
 			return self.render_file(filename)
 		else:
@@ -75,11 +75,14 @@ class NewArticleHandler(PageHandler):
 	
 	def post(self):
 		# TODO 鉴权，只有管理员可以写日志，其他人只能看
-		form = self.get_form()
-		title = escape(form.get('title'))
-		content = escape(form.get('content'))
-		update_date = '%04d-%02d-%02d' % gmtime()[0:3]
-		id = len(os.listdir(article_list_path)) + 1
-		with open('%s/article_%d.md' % (article_list_path, id), 'w') as f:
-			f.write(title + '\n' + update_date + '\n' + content)
-		return self.render('ok')
+		if self.is_admin():
+			form = self.get_form()
+			title = escape(form.get('title'))
+			content = escape(form.get('content'))
+			update_date = '%04d-%02d-%02d' % gmtime()[0:3]
+			id = len(os.listdir(article_list_path)) + 1
+			with open('%s/article_%d.md' % (article_list_path, id), 'w') as f:
+				f.write(title + '\n' + update_date + '\n' + content)
+			return self.render('ok')
+		else:
+			return self.redirect_to_target('/signin')
