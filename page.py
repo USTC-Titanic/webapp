@@ -4,11 +4,7 @@ from flask.views import MethodView
 from datetime import datetime, date
 
 base_path = './static/%s'
-admin_username = 'ljj'
-admin_2 = 'lizhihao'
-admin_3 = 'yangjie'
-admin_4 = 'xumengqi'
-
+admin = 'ljj'
 
 class PageHandler(MethodView):
 	def render(self, content):
@@ -77,7 +73,7 @@ class PageHandler(MethodView):
 
 	def is_admin(self):
 		username = self.get_username()
-		if username == admin_1 or username == admin_2 or username == admin_3 or username == admin_4:
+		if username == admin:
 			return True
 		return False
 
