@@ -71,7 +71,8 @@ class NewArticleHandler(PageHandler):
 			filename = 'blog/new_article/new_article.html'
 			return self.render_file(filename)
 		else:
-			return self.redirect_to_target('/signin')
+			# 添加提示 【只有管理员可以写日志】
+			return self.redirect_to_target('/blog')
 	
 	def post(self):
 		# TODO 鉴权，只有管理员可以写日志，其他人只能看
@@ -85,4 +86,5 @@ class NewArticleHandler(PageHandler):
 				f.write(title + '\n' + update_date + '\n' + content)
 			return self.render('ok')
 		else:
-			return self.redirect_to_target('/signin')
+			# 添加提示 【只有管理员可以写日志】
+			return self.redirect_to_target('/blog')
