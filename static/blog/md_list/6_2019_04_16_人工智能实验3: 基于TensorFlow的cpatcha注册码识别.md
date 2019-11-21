@@ -1,5 +1,7 @@
-人工智能实验3: 基于TensorFlow的cpatcha注册码识别
+#	人工智能实验3: 基于TensorFlow的cpatcha注册码识别
+
 2019-04-16
+
 #	人工智能实验: 基于TensorFlow的cpatcha注册码识别
 
 ##	实验报告内容

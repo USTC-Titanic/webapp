@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>机器学习开发日志</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/static/blog/post/post_template.css">
+</head>
+
+<body>
+	<main class="container my_padding">
+		<article class="markdown-body entry-content p-3 p-md-6">
+
+<p>&lt;img src="#'&gt;</p>
+
+		</article>
+	</main>
+</body>
+
+<section class="row justify-content-end">
+	<div class="col-1 text-right">
+		<button type="button" id="go-to-top" class="btn btn-sm btn-outline-primary" onclick="goToTop()" style="display: none; position: fixed; bottom: 80px; right: 16px;">↑</button>
+	</div>
+</section>
+
+<script type="text/javascript">
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function(){
+	if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+		document.getElementById("go-to-top").style.display = "block";
+	} else {
+		document.getElementById("go-to-top").style.display = "none";
+	}
+};
+
+// https://www.w3schools.com/tags/ev_onclick.asp
+// http://www.w3school.com.cn/jsref/met_win_setinterval.asp
+function goToTop(){
+	let t = setInterval( function(){
+		if( document.documentElement.scrollTop <= 0 ){
+			clearInterval(t);
+		}else{
+			document.documentElement.scrollTop -= 40;
+		}
+	}, 20);
+};
+</script>
+
+</html>

@@ -1,0 +1,1 @@
+&lt;img src=&quot;#&#x27;&gt;
