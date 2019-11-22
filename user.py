@@ -1,6 +1,6 @@
 import re, random, hashlib, json
 from string import ascii_letters as letters
-from page import PageHandler
+from page import PageHandler, admin_username
 from database import Database
 
 # 随机生成长度为 5 的 salt, 由大小写字母构成
@@ -10,11 +10,6 @@ def make_salt(length=5):
 	# 	salt.append(random.choice(letters))
 	# return ''.join(salt)
 	return ''.join(random.choice(letters) for x in range(length))
-
-admin_username = 'ustcadmin'
-admin_2 = 'lizhihao'
-admin_3 = 'yangjie'
-admin_4 = 'xumengqi'
 
 def make_pw_hash(username, password, salt=None):
 	if not salt:
@@ -51,7 +46,7 @@ class Record(User):
 		return record_list
 
 	def retrieve_all(self):
-		sql = "select uid, username, nickname, email from users where username <> '%s'" % admin_username + "and username <> '%s'" % admin_2 + "and username <> '%s'" % admin_3 + "and username <> '%s'" % admin_4
+		sql = "select uid, username, nickname, email from users where username <> '%s'" % admin_username
 		args = ()
 		record_list = Database().query_db(sql, args)
 		resp = []
@@ -181,7 +176,7 @@ class AdminHandler(PageHandler):
 	def is_admin(self):
 		if self.is_valid_cookies():
 			username = self.get_username()
-			if username == admin_username or username == admin_2 or username == admin_3 or username == admin_4:
+			if username == admin_username:
 				return True
 		return False
 		# return True
