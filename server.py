@@ -46,7 +46,7 @@ if __name__ == '__main__':
 	app.add_url_rule( '/practice', view_func=MLPractice.as_view('ml_practice') )
 	app.add_url_rule( '/news', view_func=NewsHandler.as_view('news') )
 	app.add_url_rule( '/blog', view_func=BlogHandler.as_view('blog') )
-	app.add_url_rule( '/blog/<int:id>', view_func=ArticleHandler.as_view('article') )
+	app.add_url_rule( '/blog/<int:fid>', view_func=ArticleHandler.as_view('article') )
 	app.add_url_rule( '/blog/new', view_func=NewArticleHandler.as_view('new_article') )
 	app.add_url_rule( '/predict', view_func=MLPredictHandler.as_view('ml_predict') )
 	import sys
