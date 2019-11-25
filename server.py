@@ -30,7 +30,7 @@ def add_header(response):
 		response.headers['Cache-Control'] = 'public, max-age=43200'
 
 	if 'json' in content_type:
-		response.headers['Cache-Control'] = 'no-cache'
+		response.headers['Cache-Control'] = 'public, max-age=600'
 
 	return response
 
