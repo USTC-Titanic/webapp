@@ -10,7 +10,8 @@ class BlogHandler(PageHandler):
 	def get(self):
 		if self.get_args('q') == 'json':
 			post_list = []
-			for fn in os.listdir(html_path):
+			file_list = sorted(os.listdir(html_path))
+			for fn in file_list:
 				# 文件名格式
 				# 1_2019_01_23_title.md
 				fn = fn.split('_', 1)
