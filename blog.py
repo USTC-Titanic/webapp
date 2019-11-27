@@ -13,7 +13,7 @@ class BlogHandler(PageHandler):
 			file_list = sorted(os.listdir(html_path))
 			for fn in file_list:
 				# 文件名格式
-				# 1_2019_01_23_title.md
+				# 1_2019_01_23_title.html
 				fn = fn.split('_', 1)
 				fid, fn = fn[0], fn[1]
 				update_date = fn[:10].replace('_', '-')
@@ -65,6 +65,7 @@ class ArticleHandler(PageHandler):
 				with open(md_fn, 'r') as f:
 					md_content = f.read()
 
+				fn = fn.replace('.md', '.html')
 				html_fn = os.path.join(html_path, fn)
 				with open(html_fn, 'w') as f:
 					html_content = parser.get_html(md_content)
