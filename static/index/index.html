@@ -5,10 +5,119 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="/static/mynavbar.css">
-	<link rel="stylesheet" href="/static/index/index.css">
-	<link rel="stylesheet" href="/static/fa.css">
 </head>
+
+<style type="text/css">
+	/*减少连接*/
+	/*<link rel="stylesheet" href="/static/mynavbar.css">*/
+	/*<link rel="stylesheet" href="/static/index/index.css">*/
+	h3 {
+		margin-top: 8px;
+	}
+
+	body {
+		padding-top: 64px;
+	}
+
+	body > header{
+		background-color: #000;
+	}
+
+	#mybrand{
+		width: 20%;
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	#navbarCollapse{
+		width: 80%;
+		padding-left: 24px;
+	}
+
+	body > main > article {
+		width: 80%;
+		float: right;
+		margin-bottom: 96px;
+		padding: 8px;
+		word-wrap: break-word;
+	}
+
+	body > main > article > section {
+		padding: 0, 8px, 0, 8px;
+	}
+
+	section{
+		width: 100%;
+	}
+
+	aside {
+		width: 20%;
+		float: left;
+		padding: 16px;
+	}
+
+	#sidebar {
+		border: 1px solid #E8E8E8;
+	}
+
+	#sidebar-title {
+		background: linear-gradient(#ffffff, #f3f3f3);
+		height: 48px;
+
+		/* TODO: flex, 学习 flex 布局 */
+		display: flex;
+		display: -webkit-flex;
+
+		/* vertical */
+		align-items: center;
+		/* horizontal */
+		justify-content: center;
+	}
+
+	#sidebar-menu {
+		padding: 16px;
+		text-align: center;
+	}
+
+	#sidebar-menu > li{
+		list-style-type: none;
+		line-height: 32px;
+		cursor: pointer;
+		color: #777;
+	}
+
+	#sidebar-menu > li:hover{
+		color: #000;
+	}
+
+
+	.jumbotron{
+		height: 400px;
+		margin-top: 32px;
+		margin-bottom: 32px;
+		background-image: url('/static/assets/bg.jpg');
+		background-repeat: no-repeat;
+		background-position: center top;
+	}
+
+	aside > img {
+		width: 100%;
+	}
+
+	section > h1 {
+		text-align: center;
+		margin-bottom: 60px;
+	}
+
+	section.row{
+		padding-top: 32px;
+		padding-bottom: 32px;
+	}
+
+	[v-cloak] {
+		display: none;
+	}
+</style>
 
 <body>
 	<header class="navbar navbar-expand-md navbar-dark fixed-top" id="myheader">
@@ -31,10 +140,10 @@
 						<a class="nav-link" href="/blog">开发日志</a>
 					</li>
 				</ul>
-				<div v-if="nickname">
+				<div v-cloak v-if="nickname">
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<a class="nav-link" href="/profile">{{ nickname }}</a>
+							<a v-cloak class="nav-link" href="/profile">{{ nickname }}</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="/signout">注销</a>
@@ -143,7 +252,26 @@
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"></script>
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
-<script src="static/index/index.js"></script>
+<script type="text/javascript">
+	'use strict';
+
+	var myheader = new Vue({
+		el: "#myheader",
+		data:{
+			nickname: '',
+		},
+		created: function(){
+			let cookie = document.cookie;
+			let cookie_list = cookie.split(';')
+			for(let item of cookie_list){
+				if( item.indexOf('nickname=') != -1 ){
+					this.nickname = item.split('=')[1];
+				}
+			}
+		},
+	})
+
+</script>
 
 <section class="row justify-content-end">
 	<div class="col-1 text-right">
@@ -177,9 +305,7 @@ function goToTop(){
 
 <!-- footer -->
 <footer style="padding: 32px 0px 32px 0px; color: #999; text-align: center; background-color: #f9f9f9; border-top: 1px solid #e5e5e5;">
-	<p><a href="https://github.com/ustc-titanic"><i class="fab fa-github fa-2x" style="color:black;"></i></a></p>
 	<p>
-		<i class="fas fa-heart" style="color:Tomato;"></i>
 		<a href="http://flask.pocoo.org/" style="color:rgb(43, 186, 76)">Flask</a>
 		<a href="https://fontawesome.com/" style="color:#ff9c34">sklearn</a>
 		<a href="https://fontawesome.com/" style="color:#1f77b4">pandas</a>
