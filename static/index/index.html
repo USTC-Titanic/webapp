@@ -150,7 +150,7 @@
 						</li>
 					</ul>
 				</div>
-				<div v-else>
+				<div v-cloak v-else>
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<a class="nav-link" href="/signin">登录</a>
@@ -249,37 +249,52 @@
 	</main>
 </body>
 
-<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"></script>
-<script src="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
-<script type="text/javascript">
-	'use strict';
-
-	var myheader = new Vue({
-		el: "#myheader",
-		data:{
-			nickname: '',
-		},
-		created: function(){
-			let cookie = document.cookie;
-			let cookie_list = cookie.split(';')
-			for(let item of cookie_list){
-				if( item.indexOf('nickname=') != -1 ){
-					this.nickname = item.split('=')[1];
-				}
-			}
-		},
-	})
-
-</script>
-
 <section class="row justify-content-end">
 	<div class="col-1 text-right">
 		<button type="button" id="go-to-top" class="btn btn-sm btn-outline-primary" onclick="goToTop()" style="display: none; position: fixed; bottom: 80px; right: 16px;">↑</button>
 	</div>
 </section>
 
+
+<!-- footer -->
+<footer style="padding: 32px 0px 32px 0px; color: #999; text-align: center; background-color: #f9f9f9; border-top: 1px solid #e5e5e5;">
+	<p>
+		<a href="http://flask.pocoo.org/" style="color:rgb(43, 186, 76)">Flask</a>
+		<a href="https://fontawesome.com/" style="color:#ff9c34">sklearn</a>
+		<a href="https://fontawesome.com/" style="color:#1f77b4">pandas</a>
+		<a href="https://fontawesome.com/" style="color:#aa314d">ECharts</a>
+	</p>
+	<p>
+		<a href="https://vuejs.org/" style="color:#4fc08d">Vue.js</a>
+		<a href="https://github.com/axios/axios" style="color:#fe7c38">axios</a>
+		<a href="https://getbootstrap.com/" style="color:#563d7c">Bootstrap</a>
+		<a href="https://fontawesome.com/" style="color:#228ae6">FontAwesome</a>
+	</p>
+</footer>
+<!-- footer -->
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
 <script type="text/javascript">
+'use strict';
+
+var myheader = new Vue({
+	el: "#myheader",
+	data:{
+		nickname: '',
+	},
+	created: function(){
+		let cookie = document.cookie;
+		let cookie_list = cookie.split(';')
+		for(let item of cookie_list){
+			if( item.indexOf('nickname=') != -1 ){
+				this.nickname = item.split('=')[1];
+			}
+		}
+	},
+})
+
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function(){
 	if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
@@ -301,23 +316,5 @@ function goToTop(){
 	}, 20);
 };
 </script>
-
-
-<!-- footer -->
-<footer style="padding: 32px 0px 32px 0px; color: #999; text-align: center; background-color: #f9f9f9; border-top: 1px solid #e5e5e5;">
-	<p>
-		<a href="http://flask.pocoo.org/" style="color:rgb(43, 186, 76)">Flask</a>
-		<a href="https://fontawesome.com/" style="color:#ff9c34">sklearn</a>
-		<a href="https://fontawesome.com/" style="color:#1f77b4">pandas</a>
-		<a href="https://fontawesome.com/" style="color:#aa314d">ECharts</a>
-	</p>
-	<p>
-		<a href="https://vuejs.org/" style="color:#4fc08d">Vue.js</a>
-		<a href="https://github.com/axios/axios" style="color:#fe7c38">axios</a>
-		<a href="https://getbootstrap.com/" style="color:#563d7c">Bootstrap</a>
-		<a href="https://fontawesome.com/" style="color:#228ae6">FontAwesome</a>
-	</p>
-</footer>
-<!-- footer -->
 
 </html>
