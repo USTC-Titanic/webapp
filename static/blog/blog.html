@@ -5,9 +5,120 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="/static/mynavbar.css">
-	<link rel="stylesheet" href="/static/blog/blog.css">
 </head>
+
+<style type="text/css">
+	/*减少连接*/
+	/*<link rel="stylesheet" href="/static/mynavbar.css">*/
+	/*<link rel="stylesheet" href="/static/blog/blog.css">*/
+	h3 {
+		margin-top: 8px;
+	}
+
+	body {
+		padding-top: 64px;
+	}
+
+	body > header{
+		background-color: #000;
+	}
+
+	#mybrand{
+		width: 20%;
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	#navbarCollapse{
+		width: 80%;
+		padding-left: 24px;
+	}
+
+	body > main > article {
+		width: 80%;
+		float: right;
+		margin-bottom: 96px;
+		padding: 8px;
+		word-wrap: break-word;
+	}
+
+	body > main > article > section {
+		padding: 0, 8px, 0, 8px;
+	}
+
+	section{
+		width: 100%;
+	}
+
+	aside {
+		width: 20%;
+		float: left;
+		padding: 16px;
+	}
+
+	#sidebar {
+		border: 1px solid #E8E8E8;
+	}
+
+	#sidebar-title {
+		background: linear-gradient(#ffffff, #f3f3f3);
+		height: 48px;
+
+		/* TODO: flex, 学习 flex 布局 */
+		display: flex;
+		display: -webkit-flex;
+
+		/* vertical */
+		align-items: center;
+		/* horizontal */
+		justify-content: center;
+	}
+
+	#sidebar-menu {
+		padding: 16px;
+		text-align: center;
+	}
+
+	#sidebar-menu > li{
+		list-style-type: none;
+		line-height: 32px;
+		cursor: pointer;
+		color: #777;
+	}
+
+	#sidebar-menu > li:hover{
+		color: #000;
+	}
+
+	.post-item:hover{
+		background-color: #e9ecef45;
+	}
+
+	.post-item{
+		padding:24px;
+	}
+
+	section.row {
+		padding: 48px;
+	}
+
+	h5{
+		width:100%;height:100%;
+	}
+
+	.update_date{
+		color:#999;
+	}
+
+	a{
+		cursor:pointer;
+		text-decoration: none !important;
+	}
+
+	[v-cloak] {
+		display: none;
+	}
+</style>
 
 <body>
 	<header id="myheader" class="navbar navbar-expand-md navbar-dark fixed-top">
@@ -30,7 +141,7 @@
 						<a class="nav-link" href="/blog">开发日志</a>
 					</li>
 				</ul>
-				<div v-if="nickname">
+				<div v-cloak v-if="nickname">
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<a class="nav-link" href="/profile">{{ nickname }}</a>
@@ -40,7 +151,7 @@
 						</li>
 					</ul>
 				</div>
-				<div v-else>
+				<div v-cloak v-else>
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<a class="nav-link" href="/signin">登录</a>
@@ -64,10 +175,10 @@
 
 		<section v-show="post_list">
 			<div v-for="(post, key) in post_list" class="row post-item">
-				<div class="col">
+				<div v-cloak class="col">
 					<a v-bind:href="'/blog/'+post.id"><h5>{{ post.title }}</h5></a>
 				</div>
-				<div class="col-auto text-right update_date">{{ post.update_date }}</div>
+				<div v-cloak class="col-auto text-right update_date">{{ post.update_date }}</div>
 			</div>
 		</section>
 
@@ -76,9 +187,9 @@
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"></script>
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="/static/vue.js"></script>
-<script src="/static/axios.js"></script>
-<script src="/static/blog/blog.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
+<script src="https://cdn.bootcss.com/axios/0.17.1/axios.min.js"></script>
+
 
 <section class="row justify-content-end">
 	<div class="col-1 text-right">
@@ -87,26 +198,75 @@
 </section>
 
 <script type="text/javascript">
-// When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function(){
-	if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-		document.getElementById("go-to-top").style.display = "block";
-	} else {
-		document.getElementById("go-to-top").style.display = "none";
-	}
-};
+	'use strict';
 
-// https://www.w3schools.com/tags/ev_onclick.asp
-// http://www.w3school.com.cn/jsref/met_win_setinterval.asp
-function goToTop(){
-	let t = setInterval( function(){
-		if( document.documentElement.scrollTop <= 0 ){
-			clearInterval(t);
-		}else{
-			document.documentElement.scrollTop -= 40;
+	var myheader = new Vue({
+		el: '#myheader',
+		data:{
+			nickname: '',
+		},
+		created: function(){
+			let cookie = document.cookie;
+			let cookie_list = cookie.split(';')
+			for(let item of cookie_list){
+				if( item.indexOf('nickname=') != -1 ){
+					this.nickname = item.split('=')[1];
+				}
+			}
 		}
-	}, 20);
-};
+	});
+
+	var app = new Vue({
+		el: '#blog',
+		data: {
+			pathname: '',
+			totalPage: 2,
+			post_list: [],
+			username: '',
+		},
+		created: function(){
+			let cookie = document.cookie;
+			let cookie_list = cookie.split(';')
+			for(let item of cookie_list){
+				if( item.indexOf('username=') != -1 ){
+					this.username = item.split('=')[1];
+				}
+			}
+			this.pathname = document.location.pathname;
+			this.get_post_list();
+		},
+		methods: {
+			get_post_list: function(){
+				let self = this;
+				let APIjson = `${self.pathname}?q=json`;
+				axios.get(APIjson)
+					.then(function(resp){
+						self.post_list = resp.data;
+					});
+			}
+		}
+	})
+
+	// When the user scrolls down 20px from the top of the document, show the button
+	window.onscroll = function(){
+		if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+			document.getElementById("go-to-top").style.display = "block";
+		} else {
+			document.getElementById("go-to-top").style.display = "none";
+		}
+	};
+
+	// https://www.w3schools.com/tags/ev_onclick.asp
+	// http://www.w3school.com.cn/jsref/met_win_setinterval.asp
+	function goToTop(){
+		let t = setInterval( function(){
+			if( document.documentElement.scrollTop <= 0 ){
+				clearInterval(t);
+			}else{
+				document.documentElement.scrollTop -= 40;
+			}
+		}, 20);
+	};
 </script>
 
 </html>
