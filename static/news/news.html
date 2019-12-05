@@ -5,9 +5,126 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="/static/mynavbar.css">
-	<link rel="stylesheet" href="/static/news/news.css">
 </head>
+
+<style type="text/css">
+	/*减少连接*/
+	/*<link rel="stylesheet" href="/static/mynavbar.css">*/
+	/*<link rel="stylesheet" href="/static/news/news.css">*/
+	h3 {
+		margin-top: 8px;
+	}
+
+	body {
+		padding-top: 64px;
+	}
+
+	body > header{
+		background-color: #000;
+	}
+
+	#mybrand{
+		width: 20%;
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	#navbarCollapse{
+		width: 80%;
+		padding-left: 24px;
+	}
+
+	body > main > article {
+		width: 80%;
+		float: right;
+		margin-bottom: 96px;
+		padding: 8px;
+		word-wrap: break-word;
+	}
+
+	body > main > article > section {
+		padding: 0, 8px, 0, 8px;
+	}
+
+	section{
+		width: 100%;
+	}
+
+	aside {
+		width: 20%;
+		float: left;
+		padding: 16px;
+	}
+
+	#sidebar {
+		border: 1px solid #E8E8E8;
+	}
+
+	#sidebar-title {
+		background: linear-gradient(#ffffff, #f3f3f3);
+		height: 48px;
+
+		/* TODO: flex, 学习 flex 布局 */
+		display: flex;
+		display: -webkit-flex;
+
+		/* vertical */
+		align-items: center;
+		/* horizontal */
+		justify-content: center;
+	}
+
+	#sidebar-menu {
+		padding: 16px;
+		text-align: center;
+	}
+
+	#sidebar-menu > li{
+		list-style-type: none;
+		line-height: 32px;
+		cursor: pointer;
+		color: #777;
+	}
+
+	#sidebar-menu > li:hover{
+		color: #000;
+	}
+
+	.newsitem{
+		padding: 8px;
+		height: 320px;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.newscard {
+		width: 100%;
+		height: 100%;
+		cursor: pointer;
+		border: 1px solid #E8E8E8;
+		padding: 32px 16px 32px 16px;
+	}
+
+	.newscard:hover {
+		background-color: #e9ecef45;
+	}
+
+	.newsheader{
+		padding: 8px;
+		font-size: 1.5rem;
+	}
+
+	.newsdigest{
+		padding: 8px 8px 0px 8px;
+	}
+
+
+	[v-cloak] {
+		display: none;
+	}
+</style>
 
 <body>
 	<header id="myheader" class="navbar navbar-expand-md navbar-dark fixed-top">
@@ -30,7 +147,7 @@
 						<a class="nav-link" href="/blog">开发日志</a>
 					</li>
 				</ul>
-				<div v-if="nickname">
+				<div v-cloak v-if="nickname">
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<a class="nav-link" href="/profile">{{ nickname }}</a>
@@ -40,7 +157,7 @@
 						</li>
 					</ul>
 				</div>
-				<div v-else>
+				<div v-cloak v-else>
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<a class="nav-link" href="/signin">登录</a>
@@ -70,22 +187,22 @@
 		<article class="row">
 			<div class="col-6 newsitem" v-for="(news, key) in news_list" v-bind:key="key">
 				<section class="newscard" v-bind:data-target="'#content-' + key" data-toggle="modal">
-					<div class="newsheader">{{ news.title }}</div>
-					<div class="newsdigest">{{ news.content.substring(0, 32) }} ...</div>
+					<div v-cloak class="newsheader">{{ news.title }}</div>
+					<div v-cloak class="newsdigest">{{ news.content.substring(0, 32) }} ...</div>
 				</section>
 				<section class="modal fade" v-bind:id="'content-' + key" tabindex="-1">
 					<div class="modal-dialog modal-content">
 						<!-- <div class=""> -->
-							<div class="modal-header">
+							<div v-cloak class="modal-header">
 								<h5 class="modal-title">{{ news.title }}</h5>
 							</div>
 
-							<div class="modal-body">{{ news.content }}</div>
+							<div v-cloak class="modal-body">{{ news.content }}</div>
 
 							<div class="modal-body" v-show="news.url"><a v-bind:href="news.url">阅读原文</a></div>
 
 							<div class="modal-footer justify-content-between">
-								<div><time v-show="news.time">{{ news.time | get_time_delay }}</time></div>
+								<div v-cloak ><time v-show="news.time">{{ news.time | get_time_delay }}</time></div>
 								<div>
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 								</div>
@@ -96,13 +213,7 @@
 			</div>
 		</article>
 	</main>
-
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"></script>
-<script src="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
-<script src="https://cdn.bootcss.com/axios/0.17.1/axios.js"></script>
-<script src="/static/news/news.js"></script>
 
 <section class="row justify-content-end">
 	<div class="col-1 text-right">
@@ -110,27 +221,102 @@
 	</div>
 </section>
 
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
+<script src="https://cdn.bootcss.com/axios/0.17.1/axios.js"></script>
 <script type="text/javascript">
-// When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function(){
-	if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-		document.getElementById("go-to-top").style.display = "block";
-	} else {
-		document.getElementById("go-to-top").style.display = "none";
-	}
-};
+	'use strict';
 
-// https://www.w3schools.com/tags/ev_onclick.asp
-// http://www.w3school.com.cn/jsref/met_win_setinterval.asp
-function goToTop(){
-	let t = setInterval( function(){
-		if( document.documentElement.scrollTop <= 0 ){
-			clearInterval(t);
-		}else{
-			document.documentElement.scrollTop -= 40;
+	var myheader = new Vue({
+		el: '#myheader',
+		data:{
+			nickname: '',
+		},
+		created: function(){
+			let cookie = document.cookie;
+			let cookie_list = cookie.split(';')
+			for(let item of cookie_list){
+				if( item.indexOf('nickname=') != -1 ){
+					this.nickname = item.split('=')[1];
+				}
+			}
 		}
-	}, 20);
-};
+	});
+
+	var app = new Vue({
+		el: '#newspage',
+		data: {
+			src_netease: [],
+			src_36kr: [],
+			src_huxiu: [],
+			news_list: [],
+		},
+		created: function(){
+			this.pathname = document.location.pathname;
+			this.get_news_list();
+		},
+		filters: {
+			get_time_delay: function(date){
+				var past = new Date(date);
+				var now = new Date();
+				var sec = (now - past) / 1000;
+				var minute = Math.floor( sec / 60 );
+				var hour = Math.floor( minute / 60 );
+				var day = Math.floor( hour / 24 );
+				if( day > 0 ){
+					return day + 'd ago';
+				}
+				else if( hour > 0 ){
+					return hour + 'h ago';
+				}
+				else{
+					return minute + 'min ago';
+				}
+			}
+		},
+		methods: {
+			get_news_list: function(){
+				var self = this;
+				var API_36kr = `${self.pathname}?q=json&src=36kr`;
+				axios.get(API_36kr)
+					.then( function(resp) {
+						self.src_36kr = resp.data;
+						self.news_list = resp.data;
+					});
+				var API_netease = `${self.pathname}?q=json&src=netease`;
+				axios.get(API_netease)
+					.then( function(resp) {
+						self.src_netease = resp.data;
+					});
+				var API_huxiu = `${self.pathname}?q=json&src=huxiu`;
+				axios.get(API_huxiu)
+					.then( function(resp) {
+						self.src_huxiu = resp.data;
+					});
+			},
+		}
+	})
+	// When the user scrolls down 20px from the top of the document, show the button
+	window.onscroll = function(){
+		if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+			document.getElementById("go-to-top").style.display = "block";
+		} else {
+			document.getElementById("go-to-top").style.display = "none";
+		}
+	};
+
+	// https://www.w3schools.com/tags/ev_onclick.asp
+	// http://www.w3school.com.cn/jsref/met_win_setinterval.asp
+	function goToTop(){
+		let t = setInterval( function(){
+			if( document.documentElement.scrollTop <= 0 ){
+				clearInterval(t);
+			}else{
+				document.documentElement.scrollTop -= 40;
+			}
+		}, 20);
+	};
 </script>
 
 </html>
