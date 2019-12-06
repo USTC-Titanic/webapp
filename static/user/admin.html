@@ -5,9 +5,147 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="/static/mynavbar.css">
-	<link rel="stylesheet" href="/static/user/admin.css">
 </head>
+
+<style type="text/css">
+	/*减少连接*/
+	/*<link rel="stylesheet" href="/static/mynavbar.css">*/
+	/*<link rel="stylesheet" href="/static/user/admin.css">*/
+	h3 {
+		margin-top: 8px;
+	}
+
+	body {
+		padding-top: 64px;
+	}
+
+	body > header{
+		background-color: #000;
+	}
+
+	#mybrand{
+		width: 20%;
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	#navbarCollapse{
+		width: 80%;
+		padding-left: 24px;
+	}
+
+	body > main > article {
+		width: 80%;
+		float: right;
+		margin-bottom: 96px;
+		padding: 8px;
+		word-wrap: break-word;
+	}
+
+	body > main > article > section {
+		padding: 0, 8px, 0, 8px;
+	}
+
+	section{
+		width: 100%;
+	}
+
+	aside {
+		width: 20%;
+		float: left;
+		padding: 16px;
+	}
+
+	#sidebar {
+		border: 1px solid #E8E8E8;
+	}
+
+	#sidebar-title {
+		background: linear-gradient(#ffffff, #f3f3f3);
+		height: 48px;
+
+		/* TODO: flex, 学习 flex 布局 */
+		display: flex;
+		display: -webkit-flex;
+
+		/* vertical */
+		align-items: center;
+		/* horizontal */
+		justify-content: center;
+	}
+
+	#sidebar-menu {
+		padding: 16px;
+		text-align: center;
+	}
+
+	#sidebar-menu > li{
+		list-style-type: none;
+		line-height: 32px;
+		cursor: pointer;
+		color: #777;
+	}
+
+	#sidebar-menu > li:hover{
+		color: #000;
+	}
+
+	body {
+		padding-top: 128px;
+	}
+
+	body > header{
+		background-color: #000;
+	}
+
+	#mybrand{
+		width: 20%;
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	#navbarCollapse{
+		width: 80%;
+		padding-left: 24px;
+	}
+
+	#myprofile{
+		width: 240px;
+	}
+
+	.form-row{
+		margin: 8px;
+	}
+
+	p#error{
+		color: red;
+	}
+
+	.mypadding-64{
+		padding: 64px;
+	}
+
+	.mypadding-16{
+		padding: 16px;
+	}
+
+	.form-row{
+		margin: 8px;
+	}
+
+	.modal{
+		top: 24%;
+	}
+
+	.mypagination{
+		width: 64px;
+	    text-align: center;
+	}
+	[v-cloak] {
+		display: none;
+	}
+</style>
+
 <body>
 	<header class="navbar navbar-expand-md navbar-dark fixed-top" id="myheader">
 		<div class="container">
@@ -29,7 +167,7 @@
 						<a class="nav-link" href="/blog">开发日志</a>
 					</li>
 				</ul>
-				<div v-if="nickname">
+				<div v-cloak v-if="nickname">
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<a class="nav-link" href="/profile">{{ nickname }}</a>
@@ -39,7 +177,7 @@
 						</li>
 					</ul>
 				</div>
-				<div v-else>
+				<div v-cloak v-else>
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<a class="nav-link" href="/signin">登录</a>
@@ -66,7 +204,7 @@
 			</div>
 		</section>
 
-		<table class="table table-striped table-hover mypadding-16">
+		<table v-cloak class="table table-striped table-hover mypadding-16">
 			<thead>
 				<tr>
 					<th scope="col" style="width:20%">序号</th>
@@ -131,7 +269,7 @@
 		</section>
 
 		<section class="row mypadding-16">
-			<div class="col">总页数：{{ maxPage }}</div>
+			<div v-cloak class="col">总页数：{{ maxPage }}</div>
 		</section>
 
 		<section class="mypadding-16">
@@ -154,5 +292,164 @@
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
 <script src="https://cdn.bootcss.com/axios/0.17.1/axios.js"></script>
-<script src="/static/user/admin.js"></script>
+
+<script type="text/javascript">
+	'use strict';
+
+	var myheader = new Vue({
+		el: '#myheader',
+		data:{
+			nickname: '',
+		},
+		created: function(){
+			let cookie = document.cookie;
+			let cookie_list = cookie.split(';')
+			for(let item of cookie_list){
+				if( item.indexOf('nickname=') != -1 ){
+					this.nickname = item.split('=')[1];
+				}
+			}
+		}
+	});
+
+	var re_password = /^.{6,16}$/;
+	var api = '/admin?q=json';
+
+	var app = new Vue({
+		el: "#adminpanel",
+		data:{
+			userlist: [],
+			maxLength: 0,
+			operation: '',
+			user: {
+				uid: 0,
+				username: '',
+				password: '',
+				nickname: '',
+				email: '',
+			},
+			error_msg: '',
+			curPage: 1,
+			index: 1,
+			maxPage: 1,
+			keyword: '',
+			tmpUserlist: [],
+		},
+		created: function(){
+			this.doRetrieve();
+		},
+		watch:{
+			keyword: function(){
+				let self = this;
+				let keyword = this.keyword;
+				let arr = this.tmpUserlist.filter( function(user){
+					return user.username.includes(keyword) === true || user.nickname.includes(keyword) === true || user.email.includes(keyword) === true;
+				})
+				let len = arr.length;
+				this.maxLength = len;
+				this.maxPage = parseInt(len / 5) + 1;
+				this.userlist = arr;
+			}
+		},
+		methods:{
+			doSearch: function(){
+				this.userlist = [];
+				for( let i = 0; i < this.maxLength; i++ ){
+					let user = this.tmpUserlist[i];
+					if( user.username.includes(this.keyword) ){
+						this.userlist.push(this.tmpUserlist[i]);
+					}
+				}
+				this.maxLength = this.userlist.length;
+				this.maxPage = parseInt(this.maxLength) + 1;
+			},
+			doCancel: function(){
+				this.keyword = '';
+				this.userlist = this.tmpUserlist;
+				this.maxLength = this.userlist.length;
+				this.maxPage = parseInt(this.maxLength / 5) + 1;
+			},
+			doCreate: function(){
+				
+			},
+			doRetrieve: function(){
+				let self = this;
+				axios.get(api)
+					.then( function(resp){
+						self.userlist = resp.data;
+						self.tmpUserlist = resp.data;
+						self.maxLength = self.userlist.length;
+						self.maxPage = parseInt((self.maxLength + 4) / 5);
+					});
+			},
+			openModal: function(index, operation){
+				let user = this.userlist[index];
+				this.index = index;
+				this.user.username = user.username;
+				this.user.nickname = user.nickname;
+				this.user.email = user.email;
+				this.operation = operation;
+			},
+			doRequest: function(){
+				if( this.operation === '修改' ){
+					this.doUpdate();
+				}
+				else if( this.operation === '删除' ){
+					this.doDelete();
+				}
+			},
+			doUpdate: function(){
+				if( this.user.password != '' && re_password.test(this.user.password) === false ){
+					this.error_msg = '密码不符合规则';
+				}
+				else{
+					this.userlist[this.index].nickname = this.user.nickname;
+					this.userlist[this.index].email = this.user.email;
+					let self = this;
+					axios.put(api, self.user)
+						.then( function(resp) {
+							console.log(resp.data);
+							if( resp.data != 'ok' ){
+								self.error_msg = '操作失败';
+							}
+						});
+				}
+			},
+			doDelete: function(){
+				this.userlist.splice(this.index, 1);
+				this.maxLength--;
+				let self = this;
+				axios.delete(api + '&username=' + self.user.username)
+					.then( function(resp) {
+						console.log(resp.data);
+						if( resp.data != 'ok' ){
+							self.error_msg = '操作失败';
+						}
+					});
+			},
+			getIndexlist: function(){
+				let indexlist = [];
+				let begin = (this.curPage - 1) * 5;
+				for( let offet = 0; offet < 5; offet++ ){
+					let index = begin + offet;
+					if( index >= this.maxLength ){
+						break;
+					}
+					indexlist.push(index);
+				}
+				return indexlist;
+			},
+			addPage: function(){
+				if( this.curPage < this.maxPage ){
+					this.curPage++;
+				}
+			},
+			decPage: function(){
+				if( this.curPage > 1 ){
+					this.curPage--;
+				}
+			}
+		}
+	})
+</script>
 </html>
