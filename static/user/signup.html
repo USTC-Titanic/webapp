@@ -5,10 +5,120 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="/static/mynavbar.css">
-	<link rel="stylesheet" href="/static/user/signin_signup.css">
-
 </head>
+
+<style type="text/css">
+	/*减少连接*/
+	/*<link rel="stylesheet" href="/static/mynavbar.css">*/
+	/*<link rel="stylesheet" href="/static/user/signin_signup.css">*/
+	h3 {
+		margin-top: 8px;
+	}
+
+	body {
+		padding-top: 64px;
+	}
+
+	body > header{
+		background-color: #000;
+	}
+
+	#mybrand{
+		width: 20%;
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	#navbarCollapse{
+		width: 80%;
+		padding-left: 24px;
+	}
+
+	body > main > article {
+		width: 80%;
+		float: right;
+		margin-bottom: 96px;
+		padding: 8px;
+		word-wrap: break-word;
+	}
+
+	body > main > article > section {
+		padding: 0, 8px, 0, 8px;
+	}
+
+	section{
+		width: 100%;
+	}
+
+	aside {
+		width: 20%;
+		float: left;
+		padding: 16px;
+	}
+
+	#sidebar {
+		border: 1px solid #E8E8E8;
+	}
+
+	#sidebar-title {
+		background: linear-gradient(#ffffff, #f3f3f3);
+		height: 48px;
+
+		/* TODO: flex, 学习 flex 布局 */
+		display: flex;
+		display: -webkit-flex;
+
+		/* vertical */
+		align-items: center;
+		/* horizontal */
+		justify-content: center;
+	}
+
+	#sidebar-menu {
+		padding: 16px;
+		text-align: center;
+	}
+
+	#sidebar-menu > li{
+		list-style-type: none;
+		line-height: 32px;
+		cursor: pointer;
+		color: #777;
+	}
+
+	#sidebar-menu > li:hover{
+		color: #000;
+	}
+
+
+	body{
+		/*background-color: #222;*/
+	}
+
+	h4 {
+		color: #fff;
+	}
+
+	main {
+		padding-top: 160px;
+	}
+
+	.form-row{
+		margin: 8px;
+	}
+
+	form{
+		width: 240px;
+	}
+
+	p#error{
+		color: red;
+	}
+	[v-cloak] {
+		display: none;
+	}
+</style>
+
 <body>
 	<header id="myheader" class="navbar navbar-expand-md navbar-dark fixed-top">
 		<div class="container">
@@ -30,7 +140,7 @@
 						<a class="nav-link" href="/blog">开发日志</a>
 					</li>
 				</ul>
-				<div v-if="nickname">
+				<div v-cloak v-if="nickname">
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<a class="nav-link" href="/profile">{{ nickname }}</a>
@@ -40,7 +150,7 @@
 						</li>
 					</ul>
 				</div>
-				<div v-else>
+				<div v-cloak v-else>
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<a class="nav-link" href="/signin">登录</a>
@@ -97,7 +207,7 @@
 					<a href="/signin">已有账号？马上登录</a>
 				</div>
 
-				<div class="form-row justify-content-center" v-if="error_msg">
+				<div v-cloak class="form-row justify-content-center" v-if="error_msg">
 					<p id="error">{{ error_msg }}</p>
 				</div>
 			</form>
@@ -108,5 +218,126 @@
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
 <script src="https://cdn.bootcss.com/axios/0.17.1/axios.js"></script>
-<script src="/static/user/signup.js"></script>
+
+<script type="text/javascript">
+	// MVC, View 和 Control 分开, 逻辑不要全部混在 html 里面
+	'use strict';
+
+	var myheader = new Vue({
+		el: '#myheader',
+		data:{
+			nickname: '',
+		},
+		created: function(){
+			let cookie = document.cookie;
+			let cookie_list = cookie.split(';')
+			for(let item of cookie_list){
+				if( item.indexOf('nickname=') != -1 ){
+					this.nickname = item.split('=')[1];
+				}
+			}
+		}
+	});
+
+	var re_username = /^[a-zA-Z0-9]{3,16}$/;
+	var re_password = /^.{6,16}$/;
+	var re_nickname = /^.{3,16}$/;
+	var re_email = /^[\S]+@[\S]+.[\S]+$/
+
+	// for( var i = 0; i < 4; i++ ){
+		// https://stackoverflow.com/questions/195951/how-to-change-an-elements-class-with-javascript
+		// document.getElementsByTagName('input')[i].classList.add('form-control');
+	// }
+
+	var app = new Vue({
+		el: '#signup',
+		data:{
+			username: '',
+			password: '',
+			verify: '',
+			nickname: '',
+			email: '',
+			error_msg: '',
+		},
+		created: function(){
+			let cookie = document.cookie;
+			let cookie_list = cookie.split(';')
+			for(let item of cookie_list){
+				if( item.indexOf('username=') != -1 ){
+					this.username = item.split('=')[1];
+				}
+			}
+		},
+		methods:{
+			do_signup: function(){
+				// 检查用户名是否合法
+				if( re_username.test(this.username) === false ){
+					this.error_msg = '用户名不符合规则';
+					this.username = '';
+					document.getElementsByTagName('input')[0].focus();
+				}
+				// 检查密码是否合法
+				else if( re_password.test(this.password) === false ){
+					this.error_msg = '密码不符合规则';
+					this.password = '';
+					document.getElementsByTagName('input')[1].focus();
+				}
+				// 检查密码是否相同
+				else if( this.password != this.verify ){
+					this.error_msg = '两次输入的密码不一致';
+					this.verify = '';
+					document.getElementsByTagName('input')[2].focus();
+				}
+				// 检查昵称是否合法
+				else if( re_nickname.test(this.nickname) == false ){
+					this.error_msg = '昵称不符合规则';
+					this.nickname = '';
+					document.getElementsByTagName('input')[3].focus();
+				}
+				// 检查邮箱
+				else if( re_email.test(this.email) === false )
+				{
+					this.error_msg = '邮箱不符合规则';
+					this.email = '';
+					document.getElementsByTagName('input')[4].focus();
+				}
+				else{
+					this.error_msg = '请稍等...';
+					var self = this;
+					var form = {
+						username: self.username,
+						password: self.password,
+						nickname: self.nickname,
+						email: self.email,
+					};
+					var api_post = '/signup'
+					axios.post(api_post, form)
+					.then(function(resp){
+						console.log(resp.data);
+						if( resp.data === 'taken' ){
+							self.error_msg = '用户名已被使用';
+							self.username = '';
+						}
+						else if( resp.data == 'succ' ){
+							self.error_msg = '注册成功';
+							self.resp = resp
+							window.location.replace('/');
+						}
+						else if( resp.data == 'errorio' ){
+							self.error_msg = '网络繁忙请稍后再试';
+						}
+						else if( resp.data === 'error' ){
+							self.error_msg = '注册信息格式错误';
+							// self.username = '';
+							// self.password = '';
+							// self.verify = '';
+							// self.email = '';
+						}
+					})
+				}
+			}
+		}
+	})
+
+</script>
 </html>
